@@ -1,24 +1,27 @@
 package me.montecode.games.runningmonster.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.GL20;
 
-/**
- * Created by pc on 18.10.2014.
- */
+import me.montecode.games.runningmonster.stages.GameStage;
+
 public class MainGameScreen implements Screen {
 
-    SpriteBatch batch = new SpriteBatch();
-    Texture pelican;
+    private GameStage stage;
+
+    public MainGameScreen(){
+        stage = new GameStage();
+    }
 
     @Override
     public void render(float delta) {
+        //Clear the screen
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        pelican = new Texture("pelican.jpg");
-        batch.begin();
-        batch.draw(pelican,0,0);
-        batch.end();
+        //Update the stage
+        stage.draw();
+        stage.act(delta);
     }
 
     @Override
