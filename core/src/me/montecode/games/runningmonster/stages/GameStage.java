@@ -35,6 +35,7 @@ public class GameStage extends Stage implements ContactListener{
     private Box2DDebugRenderer renderer;
 
     private Rectangle screenRightSide;
+    private Rectangle screenLeftSide;
 
     private Vector3 touchPoint;
 
@@ -70,7 +71,8 @@ public class GameStage extends Stage implements ContactListener{
 
     private void setupTouchControlAreas(){
         touchPoint = new Vector3();
-        screenRightSide = new Rectangle(getCamera().viewportWidth / 2, 0, getCamera().viewportHeight / 2,
+        screenLeftSide = new Rectangle(0, 0, getCamera().viewportWidth / 2, getCamera().viewportHeight);
+        screenRightSide = new Rectangle(getCamera().viewportWidth / 2, 0, getCamera().viewportWidth / 2,
                 getCamera().viewportHeight);
         Gdx.input.setInputProcessor(this);
     }
@@ -102,13 +104,28 @@ public class GameStage extends Stage implements ContactListener{
 
         if(rightSideTouched(touchPoint.x, touchPoint.y)){
             runner.jump();
+        } else if(leftSideTouched(touchPoint.x, touchPoint.y)){
+            runner.dodge();
         }
 
         return super.touchDown(x, y, pointer, button);
     }
 
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button){
+        if(runner.isDodging()){
+            runner.stopDodge();
+        }
+        return super.touchUp(screenX, screenY, pointer, button);
+    }
+
+
     private boolean rightSideTouched(float x, float y){
         return screenRightSide.contains(x, y);
+    }
+
+    private boolean leftSideTouched(float x, float y){
+        return screenLeftSide.contains(x, y);
     }
 
     private void translateScreenToWorldCoordinates(int x, int y){
