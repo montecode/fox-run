@@ -15,9 +15,10 @@ import me.montecode.games.runningmonster.actors.Ground;
 import me.montecode.games.runningmonster.actors.Runner;
 import me.montecode.games.runningmonster.utils.WorldUtils;
 import me.montecode.games.runningmonster.utils.BodyUtils;
+import me.montecode.games.runningmonster.actors.Enemy;
 
 import com.badlogic.gdx.physics.box2d.*;
-
+import com.badlogic.gdx.utils.Array;
 
 
 public class GameStage extends Stage implements ContactListener{
@@ -51,6 +52,7 @@ public class GameStage extends Stage implements ContactListener{
         world.setContactListener(this);
         setUpGround();
         setUpRunner();
+        createEnemy();
     }
 
     private void setUpGround(){
@@ -82,6 +84,9 @@ public class GameStage extends Stage implements ContactListener{
     public void act(float delta){
         super.act(delta);
 
+        Array bodies = new Array(world.getBodyCount());
+        world.getBodies(bodies);
+
         accumulator += delta;
 
         while(accumulator >= delta){
@@ -90,6 +95,20 @@ public class GameStage extends Stage implements ContactListener{
         }
 
         //TODO: Implement interpolation
+    }
+
+    private void update(Body body){
+        if (!BodyUtils.bodyInBounds(body)){
+            if (BodyUtils.bodyIsEnemy(body) && !runner.isHit()){
+                createEnemy();
+            }
+            world.destroyBody(body);
+        }
+    }
+
+    private void createEnemy() {
+        Enemy enemy = new Enemy(WorldUtils.createEnemy(world));
+        addActor(enemy);
     }
 
     @Override
@@ -138,7 +157,10 @@ public class GameStage extends Stage implements ContactListener{
         Body a = contact.getFixtureA().getBody();
         Body b = contact.getFixtureB().getBody();
 
-        if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsGround(b)) ||
+        if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsEnemy(b)) ||
+                (BodyUtils.bodyIsEnemy(a) && BodyUtils.bodyIsRunner(b))) {
+            runner.hit();
+        } else if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsGround(b)) ||
                 (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsRunner(b))) {
             runner.landed();
         }
