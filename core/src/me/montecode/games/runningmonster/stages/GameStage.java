@@ -84,8 +84,12 @@ public class GameStage extends Stage implements ContactListener{
     public void act(float delta){
         super.act(delta);
 
-        Array bodies = new Array(world.getBodyCount());
+        Array<Body> bodies = new Array<Body>(world.getBodyCount());
         world.getBodies(bodies);
+
+        for(Body body : bodies){
+            update(body);
+        }
 
         accumulator += delta;
 
