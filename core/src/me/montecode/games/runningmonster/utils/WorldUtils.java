@@ -25,7 +25,7 @@ public class WorldUtils {
         body.createFixture(shape, Constants.GROUND_DENSITY);
 
 
-        body.setUserData(new GroundUserData());
+        body.setUserData(new GroundUserData(Constants.GROUND_WIDTH, Constants.GROUND_HEIGHT));
         shape.dispose();
         return body;
     }

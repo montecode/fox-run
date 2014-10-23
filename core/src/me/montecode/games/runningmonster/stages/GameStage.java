@@ -11,19 +11,23 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import java.awt.event.ContainerListener;
 
+import me.montecode.games.runningmonster.actors.Background;
 import me.montecode.games.runningmonster.actors.Ground;
 import me.montecode.games.runningmonster.actors.Runner;
+import me.montecode.games.runningmonster.utils.Constants;
 import me.montecode.games.runningmonster.utils.WorldUtils;
 import me.montecode.games.runningmonster.utils.BodyUtils;
 import me.montecode.games.runningmonster.actors.Enemy;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
 
 public class GameStage extends Stage implements ContactListener{
-    private static final int VIEWPORT_WIDTH = 20;
-    private static final int VIEWPORT_HEIGHT = 13;
+    private static final int VIEWPORT_WIDTH = Constants.APP_WIDTH;
+    private static final int VIEWPORT_HEIGHT = Constants.APP_HEIGHT;
 
     private World world;
     private Ground ground;
@@ -41,6 +45,8 @@ public class GameStage extends Stage implements ContactListener{
     private Vector3 touchPoint;
 
     public GameStage(){
+        super(new ScalingViewport(Scaling.stretch, VIEWPORT_WIDTH, VIEWPORT_HEIGHT,
+                new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)));
         setUpWorld();
         renderer = new Box2DDebugRenderer();
         setupCamera();
@@ -50,6 +56,7 @@ public class GameStage extends Stage implements ContactListener{
     private void setUpWorld(){
         world = WorldUtils.createWorld();
         world.setContactListener(this);
+        setUpBackground();
         setUpGround();
         setUpRunner();
         createEnemy();
@@ -186,6 +193,8 @@ public class GameStage extends Stage implements ContactListener{
 
     }
 
-
+    private void setUpBackground(){
+        addActor(new Background());
+    }
 
 }
