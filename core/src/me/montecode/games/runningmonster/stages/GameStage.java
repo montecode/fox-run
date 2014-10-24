@@ -6,23 +6,23 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-
-import java.awt.event.ContainerListener;
-
-import me.montecode.games.runningmonster.actors.Background;
-import me.montecode.games.runningmonster.actors.Ground;
-import me.montecode.games.runningmonster.actors.Runner;
-import me.montecode.games.runningmonster.utils.Constants;
-import me.montecode.games.runningmonster.utils.WorldUtils;
-import me.montecode.games.runningmonster.utils.BodyUtils;
-import me.montecode.games.runningmonster.actors.Enemy;
-
-import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
+
+import me.montecode.games.runningmonster.actors.Background;
+import me.montecode.games.runningmonster.actors.Enemy;
+import me.montecode.games.runningmonster.actors.Ground;
+import me.montecode.games.runningmonster.actors.Runner;
+import me.montecode.games.runningmonster.utils.BodyUtils;
+import me.montecode.games.runningmonster.utils.Constants;
+import me.montecode.games.runningmonster.utils.WorldUtils;
 
 
 public class GameStage extends Stage implements ContactListener{
@@ -52,6 +52,13 @@ public class GameStage extends Stage implements ContactListener{
         setupCamera();
         setupTouchControlAreas();
     }
+
+    private void resetGame(){
+        setUpWorld();
+        renderer = new Box2DDebugRenderer();
+        setupCamera();
+    }
+
 
     private void setUpWorld(){
         world = WorldUtils.createWorld();
@@ -114,6 +121,9 @@ public class GameStage extends Stage implements ContactListener{
                 createEnemy();
             }
             world.destroyBody(body);
+        }
+        if(runner.isHit()){
+            resetGame();
         }
     }
 
