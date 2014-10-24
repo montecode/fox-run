@@ -1,0 +1,74 @@
+characters.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dog_dodge
+  rotate: false
+  xy: 2, 2
+  size: 306, 140
+  orig: 306, 140
+  offset: 0, 0
+  index: -1
+dog_jump
+  rotate: false
+  xy: 310, 2
+  size: 300, 150
+  orig: 300, 150
+  offset: 0, 0
+  index: -1
+dog_run1
+  rotate: false
+  xy: 612, 2
+  size: 300, 169
+  orig: 300, 169
+  offset: 0, 0
+  index: -1
+dog_run2
+  rotate: false
+  xy: 914, 2
+  size: 253, 175
+  orig: 253, 175
+  offset: 0, 0
+  index: -1
+rock_roll1
+  rotate: false
+  xy: 1169, 2
+  size: 175, 175
+  orig: 175, 175
+  offset: 0, 0
+  index: -1
+rock_roll2
+  rotate: false
+  xy: 2, 179
+  size: 175, 175
+  orig: 175, 175
+  offset: 0, 0
+  index: -1
+rocket_fly1
+  rotate: false
+  xy: 179, 179
+  size: 266, 156
+  orig: 266, 156
+  offset: 0, 0
+  index: -1
+rocket_fly2
+  rotate: false
+  xy: 447, 179
+  size: 260, 156
+  orig: 260, 156
+  offset: 0, 0
+  index: -1
+wood_roll1
+  rotate: false
+  xy: 709, 179
+  size: 287, 288
+  orig: 287, 288
+  offset: 0, 0
+  index: -1
+wood_roll2
+  rotate: false
+  xy: 998, 179
+  size: 288, 288
+  orig: 288, 288
+  offset: 0, 0
+  index: -1

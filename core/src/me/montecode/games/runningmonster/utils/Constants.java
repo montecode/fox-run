@@ -16,11 +16,10 @@ public class Constants {
     public static final float GROUND_HEIGHT = 2f;
     public static final float GROUND_DENSITY = 0f;
 
-    public static final float RUNNER_X = 2;
+    public static final float RUNNER_X = 2f;
     public static final float RUNNER_Y = GROUND_Y + GROUND_HEIGHT;
-    public static final float RUNNER_WIDTH = 1f;
-    public static final float RUNNER_HEIGHT = 2f;
-
+    public static final float RUNNER_WIDTH = 2f;
+    public static final float RUNNER_HEIGHT = 1f;
     public static final float RUNNER_GRAVITY_SCALE = 3f;
     public static float RUNNER_DENSITY = 0.5f;
     public static final float RUNNER_DODGE_X = 2f;
@@ -37,4 +36,17 @@ public class Constants {
 
     public static final String BACKGROUND_IMAGE_PATH = "background.png";
     public static final String GROUND_IMAGE_PATH = "ground.png";
+
+    public static final String CHARACTERS_ATLAS_PATH = "characters.txt";
+    public static final String[] RUNNER_RUNNING_REGION_NAMES = new String[] {"dog_run1", "dog_run2"};
+    public static final String RUNNER_DODGING_REGION_NAME = "dog_dodge";
+    public static final String RUNNER_HIT_REGION_NAME = "dog_run2";
+    public static final String RUNNER_JUMPING_REGION_NAME = "dog_jump";
+
+    public static final String[] RUNNING_SMALL_ENEMY_REGION_NAMES = new String[] {"rock_roll1", "rock_roll2"};
+    public static final String[] RUNNING_LONG_ENEMY_REGION_NAMES = new String[] {"rocket_fly1", "rocket_fly2"};
+    public static final String[] RUNNING_BIG_ENEMY_REGION_NAMES = new String[] {"rock_roll1", "rock_roll2"};
+    public static final String[] RUNNING_WIDE_ENEMY_REGION_NAMES = new String[] {"rocket_fly1", "rocket_fly2"};
+    public static final String[] FLYING_SMALL_ENEMY_REGION_NAMES = new String[] {"rocket_fly1", "rocket_fly2"};
+    public static final String[] FLYING_WIDE_ENEMY_REGION_NAMES = new String[] {"rocket_fly1", "rocket_fly2"};
 }
