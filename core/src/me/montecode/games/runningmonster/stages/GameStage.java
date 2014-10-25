@@ -32,6 +32,8 @@ public class GameStage extends Stage implements ContactListener{
     private World world;
     private Ground ground;
     private Runner runner;
+    float runTime;
+
 
     private final float TIME_STEP = 1/300f;
     private float accumulator = 0f;
@@ -49,6 +51,7 @@ public class GameStage extends Stage implements ContactListener{
                 new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)));
         setUpWorld();
         renderer = new Box2DDebugRenderer();
+
         setupCamera();
         setupTouchControlAreas();
     }
@@ -97,6 +100,7 @@ public class GameStage extends Stage implements ContactListener{
     @Override
     public void act(float delta){
         super.act(delta);
+        runTime += delta;
 
         Array<Body> bodies = new Array<Body>(world.getBodyCount());
         world.getBodies(bodies);
@@ -112,7 +116,6 @@ public class GameStage extends Stage implements ContactListener{
             accumulator -= TIME_STEP;
         }
 
-        //TODO: Implement interpolation
     }
 
     private void update(Body body){

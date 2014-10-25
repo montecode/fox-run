@@ -13,15 +13,17 @@ import me.montecode.games.runningmonster.enums.EnemyType;
 
 
 public class WorldUtils {
-    public static World createWorld(){
+
+    public static World createWorld() {
         return new World(Constants.WORLD_GRAVITY, true);
     }
-    public static Body createGround(World world){
+
+    public static Body createGround(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(new Vector2(Constants.GROUND_X, Constants.GROUND_Y));
         Body body = world.createBody(bodyDef);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(Constants.GROUND_WIDTH/2, Constants.GROUND_HEIGHT/2);
+        shape.setAsBox(Constants.GROUND_WIDTH / 2, Constants.GROUND_HEIGHT / 2);
         body.createFixture(shape, Constants.GROUND_DENSITY);
 
 
@@ -30,12 +32,12 @@ public class WorldUtils {
         return body;
     }
 
-    public static Body createRunner(World world){
+    public static Body createRunner(World world) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(new Vector2(Constants.RUNNER_X/2, Constants.RUNNER_Y/2));
+        bodyDef.position.set(new Vector2(Constants.RUNNER_X / 2, Constants.RUNNER_Y / 2));
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(Constants.RUNNER_WIDTH/2, Constants.RUNNER_HEIGHT/2);
+        shape.setAsBox(Constants.RUNNER_WIDTH / 2, Constants.RUNNER_HEIGHT / 2);
         Body body = world.createBody(bodyDef);
         body.setGravityScale(Constants.RUNNER_GRAVITY_SCALE);
         body.createFixture(shape, Constants.RUNNER_DENSITY);
@@ -45,7 +47,7 @@ public class WorldUtils {
         return body;
     }
 
-    public static Body createEnemy(World world){
+    public static Body createEnemy(World world) {
         EnemyType enemyType = RandomUtils.getRandomEnemyType();
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.KinematicBody;
