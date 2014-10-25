@@ -16,8 +16,8 @@ public class Runner extends GameActor{
     private boolean dodging;
     private boolean hit;
     private Animation runningAnimation;
-    private TextureRegion jumpingTexture;
-    private TextureRegion dodgingTexture;
+    private Animation dodgingAnimation;
+    private Animation flyingAnimation;
     private TextureRegion hitTexture;
     private float stateTime;
 
@@ -26,14 +26,25 @@ public class Runner extends GameActor{
 
         TextureAtlas textureAtlas = new TextureAtlas(Constants.CHARACTERS_ATLAS_PATH);
         TextureRegion[] runningFrames = new TextureRegion[Constants.RUNNER_RUNNING_REGION_NAMES.length];
+        TextureRegion[] dodgingFrames = new TextureRegion[Constants.RUNNER_DODGING_REGION_NAMES.length];
+        TextureRegion[] flyingFrames = new TextureRegion[Constants.RUNNER_JUMPING_REGION_NAMES.length];
         for (int i = 0; i < Constants.RUNNER_RUNNING_REGION_NAMES.length; i++) {
             String path = Constants.RUNNER_RUNNING_REGION_NAMES[i];
             runningFrames[i] = textureAtlas.findRegion(path);
         }
+        for(int i = 0; i < Constants.RUNNER_DODGING_REGION_NAMES.length; i++){
+            String path = Constants.RUNNER_DODGING_REGION_NAMES[i];
+            dodgingFrames[i] = textureAtlas.findRegion(path);
+        }
+        for(int i = 0; i < Constants.RUNNER_JUMPING_REGION_NAMES.length; i++){
+            String path = Constants.RUNNER_JUMPING_REGION_NAMES[i];
+            flyingFrames[i] = textureAtlas.findRegion(path);
+        }
         runningAnimation = new Animation(0.1f, runningFrames);
+        dodgingAnimation = new Animation(0.1f, dodgingFrames);
+        flyingAnimation = new Animation(0.1f, flyingFrames);
         stateTime = 0f;
-        jumpingTexture = textureAtlas.findRegion(Constants.RUNNER_JUMPING_REGION_NAME);
-        dodgingTexture = textureAtlas.findRegion(Constants.RUNNER_DODGING_REGION_NAME);
+
         hitTexture = textureAtlas.findRegion(Constants.RUNNER_HIT_REGION_NAME);
     }
 
@@ -46,13 +57,15 @@ public class Runner extends GameActor{
         float width = screenRectangle.width * 1.2f;
 
         if (dodging) {
-            batch.draw(dodgingTexture, x, y + screenRectangle.height / 4, width, screenRectangle.height * 3 / 4);
+            stateTime += Gdx.graphics.getDeltaTime();
+            batch.draw(dodgingAnimation.getKeyFrame(stateTime, true), x, y + screenRectangle.height / 4, width, screenRectangle.height * 3 / 4);
         } else if (hit) {
             // When he's hit we also want to apply rotation if the body has been rotated
             batch.draw(hitTexture, x, y, width * 0.5f, screenRectangle.height * 0.5f, width, screenRectangle.height, 1f,
                     1f, (float) Math.toDegrees(body.getAngle()));
         } else if (jumping) {
-            batch.draw(jumpingTexture, x, y, width, screenRectangle.height);
+            stateTime += Gdx.graphics.getDeltaTime();
+            batch.draw(flyingAnimation.getKeyFrame(stateTime, true), x, y, width, screenRectangle.height);
         } else {
             // Running
             stateTime += Gdx.graphics.getDeltaTime();
@@ -97,6 +110,7 @@ public class Runner extends GameActor{
 
     public void hit(){
         body.applyAngularImpulse(getUserData().getHitAngularImpulse(), true);
+        body.applyLinearImpulse(getUserData().getJumpingLinearImpulse(), body.getWorldCenter(), true);
         hit = true;
     }
 

@@ -2,72 +2,114 @@ characters.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-dog_dodge
+fox_dodge1
   rotate: false
-  xy: 484, 2
-  size: 306, 140
-  orig: 306, 140
+  xy: 2, 2
+  size: 254, 111
+  orig: 256, 112
+  offset: 1, 1
+  index: -1
+fox_dodge2
+  rotate: false
+  xy: 258, 2
+  size: 262, 111
+  orig: 264, 112
+  offset: 1, 1
+  index: -1
+fox_fly1
+  rotate: false
+  xy: 2, 311
+  size: 227, 156
+  orig: 227, 156
   offset: 0, 0
   index: -1
-dog_jump
+fox_fly2
   rotate: false
-  xy: 2, 144
-  size: 300, 150
-  orig: 300, 150
+  xy: 761, 153
+  size: 227, 156
+  orig: 227, 156
   offset: 0, 0
   index: -1
-dog_run1
+fox_hit
   rotate: false
-  xy: 2, 302
-  size: 300, 169
-  orig: 300, 169
+  xy: 485, 311
+  size: 250, 170
+  orig: 250, 171
   offset: 0, 0
   index: -1
-dog_run2
+fox_run1
   rotate: false
-  xy: 658, 302
-  size: 253, 175
-  orig: 253, 175
+  xy: 1091, 311
+  size: 227, 188
+  orig: 227, 188
+  offset: 0, 0
+  index: -1
+fox_run2
+  rotate: false
+  xy: 990, 153
+  size: 228, 156
+  orig: 228, 156
+  offset: 0, 0
+  index: -1
+fox_run3
+  rotate: false
+  xy: 231, 311
+  size: 252, 165
+  orig: 252, 166
+  offset: 0, 1
+  index: -1
+fox_run4
+  rotate: false
+  xy: 2, 153
+  size: 227, 149
+  orig: 228, 150
+  offset: 1, 0
+  index: -1
+fox_run5
+  rotate: false
+  xy: 1004, 2
+  size: 228, 149
+  orig: 228, 150
   offset: 0, 0
   index: -1
 rock_roll1
   rotate: false
-  xy: 481, 302
+  xy: 737, 311
   size: 175, 175
   orig: 175, 175
   offset: 0, 0
   index: -1
 rock_roll2
   rotate: false
-  xy: 304, 302
+  xy: 914, 311
   size: 175, 175
   orig: 175, 175
   offset: 0, 0
   index: -1
 rocket_fly1
   rotate: false
-  xy: 304, 144
+  xy: 231, 153
   size: 266, 156
   orig: 266, 156
   offset: 0, 0
   index: -1
 rocket_fly2
   rotate: false
-  xy: 572, 144
+  xy: 499, 153
   size: 260, 156
   orig: 260, 156
   offset: 0, 0
   index: -1
 wood_roll1
   rotate: false
-  xy: 251, 2
+  xy: 522, 2
   size: 231, 113
   orig: 231, 113
   offset: 0, 0
   index: -1
 wood_roll2
   rotate: false
-  xy: 2, 2
+  xy: 755, 2
   size: 247, 113
   orig: 247, 113
   offset: 0, 0
