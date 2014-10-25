@@ -16,10 +16,10 @@ public class Constants {
     public static final float GROUND_HEIGHT = 2f;
     public static final float GROUND_DENSITY = 0f;
 
-    public static final float RUNNER_X = 2f;
+    public static final float RUNNER_X = 2;
     public static final float RUNNER_Y = GROUND_Y + GROUND_HEIGHT;
-    public static final float RUNNER_WIDTH = 2f;
-    public static final float RUNNER_HEIGHT = 1f;
+    public static final float RUNNER_WIDTH = 1f;
+    public static final float RUNNER_HEIGHT = 2f;
     public static final float RUNNER_GRAVITY_SCALE = 3f;
     public static float RUNNER_DENSITY = 0.5f;
     public static final float RUNNER_DODGE_X = 2f;
