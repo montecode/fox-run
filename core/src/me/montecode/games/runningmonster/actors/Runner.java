@@ -41,7 +41,7 @@ public class Runner extends GameActor{
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 
-        float x = screenRectangle.x - (screenRectangle.width * 0.1f);
+        float x = 2f; //screenRectangle.x - (screenRectangle.width * 0.1f);
         float y = screenRectangle.y;
         float width = screenRectangle.width * 1.2f;
 
