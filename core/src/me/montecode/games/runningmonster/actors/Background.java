@@ -23,8 +23,12 @@ public class Background extends Actor {
     float runTime;
     float lastRunTime;
     DecimalFormat decimalFormat = new DecimalFormat("###.##");
+    private boolean scrollEnabled;
 
     public Background() {
+        runTime=0;
+        lastRunTime=0;
+        scrollEnabled=true;
         textureRegion = new TextureRegion(new Texture(Gdx.files.internal(Constants.BACKGROUND_IMAGE_PATH)));
         textureRegionBounds1 = new Rectangle(0 - Constants.APP_WIDTH / 2, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
         textureRegionBounds2 = new Rectangle(Constants.APP_WIDTH / 2, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
@@ -32,6 +36,7 @@ public class Background extends Actor {
 
     @Override
     public void act(float delta) {
+        if(scrollEnabled)
         runTime += delta*2;
         if (leftBoundsReached(delta)) {
             resetBounds();
@@ -51,7 +56,7 @@ public class Background extends Actor {
         int width = Gdx.graphics.getWidth();
         int height = Gdx.graphics.getHeight();
         font.setColor(Color.BLACK);
-        font.draw(batch, "FPS:" + Gdx.graphics.getFramesPerSecond(),600 , 450);// Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight()/2);
+//        font.draw(batch, "FPS:" + Gdx.graphics.getFramesPerSecond(),600 , 450);// Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight()/2);
        if(runTime>lastRunTime+0.2){
            lastRunTime = runTime;
            font.draw(batch,String.valueOf(decimalFormat.format(runTime)) + " m", 500,450);// Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()-Gdx.graphics.getHeight()/4);
@@ -69,8 +74,11 @@ public class Background extends Actor {
     }
 
     private void updateXBounds(float delta) {
-        textureRegionBounds1.x += delta * speed;
-        textureRegionBounds2.x += delta * speed;
+        if(scrollEnabled){
+            textureRegionBounds1.x += delta * speed;
+            textureRegionBounds2.x += delta * speed;
+        }
+
     }
 
     private void resetBounds() {
@@ -78,4 +86,7 @@ public class Background extends Actor {
         textureRegionBounds2 = new Rectangle(Constants.APP_WIDTH, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
     }
 
+    public void setScrollDisabled(boolean scrollEnabled) {
+        this.scrollEnabled = scrollEnabled;
+    }
 }

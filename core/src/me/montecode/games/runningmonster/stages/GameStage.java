@@ -25,17 +25,18 @@ import me.montecode.games.runningmonster.utils.Constants;
 import me.montecode.games.runningmonster.utils.WorldUtils;
 
 
-public class GameStage extends Stage implements ContactListener{
+public class GameStage extends Stage implements ContactListener {
     private static final int VIEWPORT_WIDTH = Constants.APP_WIDTH;
     private static final int VIEWPORT_HEIGHT = Constants.APP_HEIGHT;
 
     private World world;
     private Ground ground;
     private Runner runner;
+    private Background background;
     float runTime;
 
 
-    private final float TIME_STEP = 1/300f;
+    private final float TIME_STEP = 1 / 300f;
     private float accumulator = 0f;
 
     private OrthographicCamera camera;
@@ -45,8 +46,9 @@ public class GameStage extends Stage implements ContactListener{
     private Rectangle screenLeftSide;
 
     private Vector3 touchPoint;
+    private boolean scrollEnabled;
 
-    public GameStage(){
+    public GameStage() {
         super(new ScalingViewport(Scaling.stretch, VIEWPORT_WIDTH, VIEWPORT_HEIGHT,
                 new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)));
         setUpWorld();
@@ -56,14 +58,15 @@ public class GameStage extends Stage implements ContactListener{
         setupTouchControlAreas();
     }
 
-    private void resetGame(){
+    private void resetGame() {
         setUpWorld();
         renderer = new Box2DDebugRenderer();
         setupCamera();
     }
 
 
-    private void setUpWorld(){
+    private void setUpWorld() {
+        scrollEnabled = true;
         world = WorldUtils.createWorld();
         world.setContactListener(this);
         setUpBackground();
@@ -72,23 +75,23 @@ public class GameStage extends Stage implements ContactListener{
         createEnemy();
     }
 
-    private void setUpGround(){
+    private void setUpGround() {
         ground = new Ground(WorldUtils.createGround(world));
         addActor(ground);
     }
 
-    private void setUpRunner(){
+    private void setUpRunner() {
         runner = new Runner(WorldUtils.createRunner(world));
         addActor(runner);
     }
 
-    private void setupCamera(){
+    private void setupCamera() {
         camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-        camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0f);
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
     }
 
-    private void setupTouchControlAreas(){
+    private void setupTouchControlAreas() {
         touchPoint = new Vector3();
         screenLeftSide = new Rectangle(0, 0, getCamera().viewportWidth / 2, getCamera().viewportHeight);
         screenRightSide = new Rectangle(getCamera().viewportWidth / 2, 0, getCamera().viewportWidth / 2,
@@ -98,36 +101,49 @@ public class GameStage extends Stage implements ContactListener{
 
 
     @Override
-    public void act(float delta){
+    public void act(float delta) {
         super.act(delta);
         runTime += delta;
 
         Array<Body> bodies = new Array<Body>(world.getBodyCount());
         world.getBodies(bodies);
 
-        for(Body body : bodies){
+        for (Body body : bodies) {
             update(body);
         }
 
-        accumulator += delta;
+//        if (scrollEnabled) {
 
-        while(accumulator >= delta){
-            world.step(TIME_STEP, 6, 2);
-            accumulator -= TIME_STEP;
+            accumulator += delta;
+
+            while (accumulator >= delta) {
+                world.step(TIME_STEP, 6, 2);
+                accumulator -= TIME_STEP;
+            }
+
+//        }
+    }
+
+    private void update(Body body) {
+
+        if (runner.isHit()) {
+//                resetGame();
+            stopScrolling();
+        } else {
+            if (!BodyUtils.bodyInBounds(body)) {
+                if (BodyUtils.bodyIsEnemy(body) && !runner.isHit()) {
+                    createEnemy();
+                }
+                world.destroyBody(body);
+            }
+
         }
 
     }
 
-    private void update(Body body){
-        if (!BodyUtils.bodyInBounds(body)){
-            if (BodyUtils.bodyIsEnemy(body) && !runner.isHit()){
-                createEnemy();
-            }
-            world.destroyBody(body);
-        }
-        if(runner.isHit()){
-            resetGame();
-        }
+    private void stopScrolling() {
+        scrollEnabled = false;
+        background.setScrollDisabled(false);
     }
 
     private void createEnemy() {
@@ -136,42 +152,48 @@ public class GameStage extends Stage implements ContactListener{
     }
 
     @Override
-    public void draw(){
+    public void draw() {
         super.draw();
         renderer.render(world, camera.combined);
     }
 
     @Override
-    public boolean touchDown(int x, int y, int pointer, int button){
+    public boolean touchDown(int x, int y, int pointer, int button) {
         translateScreenToWorldCoordinates(x, y);
 
-        if(rightSideTouched(touchPoint.x, touchPoint.y)){
+        if (rightSideTouched(touchPoint.x, touchPoint.y)) {
             runner.jump();
-        } else if(leftSideTouched(touchPoint.x, touchPoint.y)){
+            if(!scrollEnabled){
+                resetGame();
+            }
+        } else if (leftSideTouched(touchPoint.x, touchPoint.y)) {
             runner.dodge();
+            if(!scrollEnabled){
+                resetGame();
+            }
         }
 
         return super.touchDown(x, y, pointer, button);
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button){
-        if(runner.isDodging()){
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if (runner.isDodging()) {
             runner.stopDodge();
         }
         return super.touchUp(screenX, screenY, pointer, button);
     }
 
 
-    private boolean rightSideTouched(float x, float y){
+    private boolean rightSideTouched(float x, float y) {
         return screenRightSide.contains(x, y);
     }
 
-    private boolean leftSideTouched(float x, float y){
+    private boolean leftSideTouched(float x, float y) {
         return screenLeftSide.contains(x, y);
     }
 
-    private void translateScreenToWorldCoordinates(int x, int y){
+    private void translateScreenToWorldCoordinates(int x, int y) {
         getCamera().unproject(touchPoint.set(x, y, 0));
     }
 
@@ -206,8 +228,9 @@ public class GameStage extends Stage implements ContactListener{
 
     }
 
-    private void setUpBackground(){
-        addActor(new Background());
+    private void setUpBackground() {
+        background = new Background();
+        addActor(background);
     }
 
 }

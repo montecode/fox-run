@@ -4,6 +4,7 @@ package me.montecode.games.runningmonster.actors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -20,6 +21,8 @@ public class Runner extends GameActor{
     private Animation flyingAnimation;
     private TextureRegion hitTexture;
     private float stateTime;
+    private float yCoordinate;
+    BitmapFont font = new BitmapFont();
 
     public Runner(Body body){
         super(body);
@@ -44,7 +47,6 @@ public class Runner extends GameActor{
         dodgingAnimation = new Animation(0.1f, dodgingFrames);
         flyingAnimation = new Animation(0.1f, flyingFrames);
         stateTime = 0f;
-
         hitTexture = textureAtlas.findRegion(Constants.RUNNER_HIT_REGION_NAME);
     }
 
@@ -71,6 +73,9 @@ public class Runner extends GameActor{
             stateTime += Gdx.graphics.getDeltaTime();
             batch.draw(runningAnimation.getKeyFrame(stateTime, true), x, y, width, screenRectangle.height);
         }
+        yCoordinate = y;
+        font.draw(batch, "Y:" + y, 600, 450);// Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight()/2);
+
     }
 
 
@@ -88,6 +93,10 @@ public class Runner extends GameActor{
 
     public void landed(){
         jumping = false;
+    }
+
+    public float getYcoordinate(){
+        return yCoordinate;
     }
 
     public void dodge(){
