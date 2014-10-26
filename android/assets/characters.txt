@@ -2,114 +2,135 @@ characters.png
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-fox_dodge1
+droid_fly1
   rotate: false
   xy: 2, 2
-  size: 254, 111
-  orig: 256, 112
-  offset: 1, 1
+  size: 131, 126
+  orig: 131, 126
+  offset: 0, 0
+  index: -1
+droid_fly2
+  rotate: false
+  xy: 135, 2
+  size: 131, 126
+  orig: 131, 126
+  offset: 0, 0
+  index: -1
+fox_dodge1
+  rotate: false
+  xy: 268, 2
+  size: 254, 110
+  orig: 254, 110
+  offset: 0, 0
   index: -1
 fox_dodge2
   rotate: false
-  xy: 258, 2
-  size: 262, 111
-  orig: 264, 112
-  offset: 1, 1
+  xy: 524, 2
+  size: 262, 110
+  orig: 262, 110
+  offset: 0, 0
   index: -1
 fox_fly1
   rotate: false
-  xy: 2, 311
-  size: 227, 156
-  orig: 227, 156
+  xy: 788, 2
+  size: 226, 154
+  orig: 226, 154
   offset: 0, 0
   index: -1
 fox_fly2
   rotate: false
-  xy: 761, 153
-  size: 227, 156
-  orig: 227, 156
+  xy: 1016, 2
+  size: 227, 154
+  orig: 227, 154
   offset: 0, 0
   index: -1
 fox_hit
   rotate: false
-  xy: 485, 311
-  size: 250, 170
-  orig: 250, 171
+  xy: 1245, 2
+  size: 227, 154
+  orig: 227, 154
   offset: 0, 0
   index: -1
 fox_run1
   rotate: false
-  xy: 1091, 311
-  size: 227, 188
-  orig: 227, 188
+  xy: 1474, 2
+  size: 226, 185
+  orig: 227, 185
   offset: 0, 0
   index: -1
 fox_run2
   rotate: false
-  xy: 990, 153
-  size: 228, 156
-  orig: 228, 156
+  xy: 1702, 2
+  size: 227, 154
+  orig: 227, 154
   offset: 0, 0
   index: -1
 fox_run3
   rotate: false
-  xy: 231, 311
-  size: 252, 165
-  orig: 252, 166
-  offset: 0, 1
+  xy: 2, 189
+  size: 251, 164
+  orig: 251, 164
+  offset: 0, 0
   index: -1
 fox_run4
   rotate: false
-  xy: 2, 153
-  size: 227, 149
-  orig: 228, 150
-  offset: 1, 0
+  xy: 255, 189
+  size: 226, 148
+  orig: 226, 148
+  offset: 0, 0
   index: -1
 fox_run5
   rotate: false
-  xy: 1004, 2
-  size: 228, 149
-  orig: 228, 150
+  xy: 483, 189
+  size: 226, 148
+  orig: 226, 148
   offset: 0, 0
   index: -1
 rock_roll1
   rotate: false
-  xy: 737, 311
+  xy: 711, 189
   size: 175, 175
   orig: 175, 175
   offset: 0, 0
   index: -1
 rock_roll2
   rotate: false
-  xy: 914, 311
+  xy: 888, 189
   size: 175, 175
   orig: 175, 175
   offset: 0, 0
   index: -1
 rocket_fly1
   rotate: false
-  xy: 231, 153
-  size: 266, 156
-  orig: 266, 156
+  xy: 1065, 189
+  size: 352, 188
+  orig: 352, 188
   offset: 0, 0
   index: -1
 rocket_fly2
   rotate: false
-  xy: 499, 153
-  size: 260, 156
-  orig: 260, 156
+  xy: 1419, 189
+  size: 351, 188
+  orig: 351, 188
+  offset: 0, 0
+  index: -1
+wall
+  rotate: false
+  xy: 1772, 189
+  size: 100, 201
+  orig: 100, 201
   offset: 0, 0
   index: -1
 wood_roll1
   rotate: false
-  xy: 522, 2
+  xy: 2, 392
   size: 231, 113
   orig: 231, 113
   offset: 0, 0
   index: -1
 wood_roll2
   rotate: false
-  xy: 755, 2
+  xy: 235, 392
   size: 247, 113
   orig: 247, 113
   offset: 0, 0

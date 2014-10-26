@@ -44,9 +44,9 @@ public class Constants {
     public static final String[] RUNNER_JUMPING_REGION_NAMES = new String[] {"fox_fly1", "fox_fly2"};
 
     public static final String[] RUNNING_SMALL_ENEMY_REGION_NAMES = new String[] {"rock_roll1", "rock_roll2"};
-    public static final String[] RUNNING_LONG_ENEMY_REGION_NAMES = new String[] {"rock_roll1", "rock_roll2"};
-    public static final String[] RUNNING_BIG_ENEMY_REGION_NAMES = new String[] {"rock_roll1", "rock_roll2"};
+    public static final String[] RUNNING_LONG_ENEMY_REGION_NAMES = new String[] {"wall"};
+    public static final String[] RUNNING_BIG_ENEMY_REGION_NAMES = new String[] {"wall"};
     public static final String[] RUNNING_WIDE_ENEMY_REGION_NAMES = new String[] {"wood_roll1", "wood_roll2"};
-    public static final String[] FLYING_SMALL_ENEMY_REGION_NAMES = new String[] {"rocket_fly1", "rocket_fly2"};
+    public static final String[] FLYING_SMALL_ENEMY_REGION_NAMES = new String[] {"droid_fly1", "droid_fly1", "droid_fly2", "droid_fly2"};
     public static final String[] FLYING_WIDE_ENEMY_REGION_NAMES = new String[] {"rocket_fly1", "rocket_fly2"};
 }
