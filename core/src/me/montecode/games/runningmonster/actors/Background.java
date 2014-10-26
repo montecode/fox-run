@@ -1,6 +1,7 @@
 package me.montecode.games.runningmonster.actors;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -24,20 +25,28 @@ public class Background extends Actor {
     float lastRunTime;
     DecimalFormat decimalFormat = new DecimalFormat("###.##");
     private boolean scrollEnabled;
+    private static Preferences prefs;
 
     public Background() {
-        runTime=0;
-        lastRunTime=0;
-        scrollEnabled=true;
+        runTime = 0;
+        lastRunTime = 0;
+        scrollEnabled = true;
         textureRegion = new TextureRegion(new Texture(Gdx.files.internal(Constants.BACKGROUND_IMAGE_PATH)));
         textureRegionBounds1 = new Rectangle(0 - Constants.APP_WIDTH / 2, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
         textureRegionBounds2 = new Rectangle(Constants.APP_WIDTH / 2, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
+
+        prefs = Gdx.app.getPreferences("RunningMonster");
+
+        // Provide default high score of 0
+        if (!prefs.contains("highScore")) {
+            prefs.putFloat("highScore", 0);
+        }
     }
 
     @Override
     public void act(float delta) {
-        if(scrollEnabled)
-        runTime += delta*2;
+        if (scrollEnabled)
+            runTime += delta * 2;
         if (leftBoundsReached(delta)) {
             resetBounds();
         } else {
@@ -53,17 +62,32 @@ public class Background extends Actor {
                 Constants.APP_HEIGHT);
         batch.draw(textureRegion, textureRegionBounds2.x, textureRegionBounds2.y, Constants.APP_WIDTH,
                 Constants.APP_HEIGHT);
-        int width = Gdx.graphics.getWidth();
-        int height = Gdx.graphics.getHeight();
         font.setColor(Color.BLACK);
-//        font.draw(batch, "FPS:" + Gdx.graphics.getFramesPerSecond(),600 , 450);// Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight()/2);
-       if(runTime>lastRunTime+0.2){
-           lastRunTime = runTime;
-           font.draw(batch,String.valueOf(decimalFormat.format(runTime)) + " m", 500,450);// Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()-Gdx.graphics.getHeight()/4);
-       }
-      else{
-           font.draw(batch,String.valueOf(decimalFormat.format(lastRunTime)) + " m", 500,450);// Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()-Gdx.graphics.getHeight()/4);
-       }
+//  Display FPS font.draw(batch, "FPS:" + Gdx.graphics.getFramesPerSecond(),600 , 450);// Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight()/2);
+        if (runTime > lastRunTime + 0.2) {
+            lastRunTime = runTime;
+            if (scrollEnabled) {
+                font.draw(batch, String.valueOf(decimalFormat.format(runTime)) + " m", 600, 450);
+            } else {
+                checkScore(runTime);
+                font.setScale(2);
+                font.setColor(Color.BLACK);
+                font.draw(batch, String.valueOf("Your highest score: " + decimalFormat.format(getHighScore())) + " m", 250, 375);
+                font.draw(batch, String.valueOf("Your score: " + decimalFormat.format(runTime)) + " m", 250, 300);
+
+            }
+        } else {
+            if (scrollEnabled) {
+                font.draw(batch, String.valueOf(decimalFormat.format(runTime)) + " m", 600, 450);
+            } else {
+                checkScore(runTime);
+                font.setScale(2);
+                font.setColor(Color.BLACK);
+                font.draw(batch, String.valueOf("Your highest score: " + decimalFormat.format(getHighScore())) + " m", 250, 375);
+                font.draw(batch, String.valueOf("Your current score: " + decimalFormat.format(runTime)) + " m", 250, 300);
+
+            }
+        }
 
 //        Gdx.app.log("SCREENDIMENSIONS", " height " + String.valueOf(Gdx.graphics.getHeight()) + " width " + String.valueOf(Gdx.graphics.getWidth()) );
 
@@ -74,7 +98,7 @@ public class Background extends Actor {
     }
 
     private void updateXBounds(float delta) {
-        if(scrollEnabled){
+        if (scrollEnabled) {
             textureRegionBounds1.x += delta * speed;
             textureRegionBounds2.x += delta * speed;
         }
@@ -88,5 +112,22 @@ public class Background extends Actor {
 
     public void setScrollDisabled(boolean scrollEnabled) {
         this.scrollEnabled = scrollEnabled;
+    }
+
+    // Receives an integer and maps it to the String highScore in prefs
+    public static void setHighScore(float val) {
+        prefs.putFloat("highScore", val);
+        prefs.flush();
+    }
+
+    // Retrieves the current high score
+    public static float getHighScore() {
+        return prefs.getFloat("highScore");
+    }
+
+    public static void checkScore(float score){
+        if (score > getHighScore()) {
+            setHighScore(score);
+        }
     }
 }

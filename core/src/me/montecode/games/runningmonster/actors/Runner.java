@@ -4,14 +4,14 @@ package me.montecode.games.runningmonster.actors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
+
 import me.montecode.games.runningmonster.box2d.RunnerUserData;
 import me.montecode.games.runningmonster.utils.Constants;
 
-public class Runner extends GameActor{
+public class Runner extends GameActor {
 
     private boolean jumping;
     private boolean dodging;
@@ -21,10 +21,8 @@ public class Runner extends GameActor{
     private Animation flyingAnimation;
     private TextureRegion hitTexture;
     private float stateTime;
-    private float yCoordinate;
-    BitmapFont font = new BitmapFont();
 
-    public Runner(Body body){
+    public Runner(Body body) {
         super(body);
 
         TextureAtlas textureAtlas = new TextureAtlas(Constants.CHARACTERS_ATLAS_PATH);
@@ -35,11 +33,11 @@ public class Runner extends GameActor{
             String path = Constants.RUNNER_RUNNING_REGION_NAMES[i];
             runningFrames[i] = textureAtlas.findRegion(path);
         }
-        for(int i = 0; i < Constants.RUNNER_DODGING_REGION_NAMES.length; i++){
+        for (int i = 0; i < Constants.RUNNER_DODGING_REGION_NAMES.length; i++) {
             String path = Constants.RUNNER_DODGING_REGION_NAMES[i];
             dodgingFrames[i] = textureAtlas.findRegion(path);
         }
-        for(int i = 0; i < Constants.RUNNER_JUMPING_REGION_NAMES.length; i++){
+        for (int i = 0; i < Constants.RUNNER_JUMPING_REGION_NAMES.length; i++) {
             String path = Constants.RUNNER_JUMPING_REGION_NAMES[i];
             flyingFrames[i] = textureAtlas.findRegion(path);
         }
@@ -73,57 +71,51 @@ public class Runner extends GameActor{
             stateTime += Gdx.graphics.getDeltaTime();
             batch.draw(runningAnimation.getKeyFrame(stateTime, true), x, y, width, screenRectangle.height);
         }
-        yCoordinate = y;
-        font.draw(batch, "Y:" + y, 600, 450);// Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight()/2);
 
     }
 
 
     @Override
-    public RunnerUserData getUserData(){
+    public RunnerUserData getUserData() {
         return (RunnerUserData) userData;
     }
 
-    public void jump(){
-        if(!(jumping || dodging || hit)){
+    public void jump() {
+        if (!(jumping || dodging || hit)) {
             body.applyLinearImpulse(getUserData().getJumpingLinearImpulse(), body.getWorldCenter(), true);
             jumping = true;
         }
     }
 
-    public void landed(){
+    public void landed() {
         jumping = false;
     }
 
-    public float getYcoordinate(){
-        return yCoordinate;
-    }
-
-    public void dodge(){
-        if(!(jumping || hit)){
+    public void dodge() {
+        if (!(jumping || hit)) {
             body.setTransform(getUserData().getDodgePosition(), getUserData().getDodgeAngle());
             dodging = true;
         }
     }
 
-    public void stopDodge(){
+    public void stopDodge() {
         dodging = false;
-        if(!hit) {
+        if (!hit) {
             body.setTransform(getUserData().getRunningPosition(), 0f);
         }
     }
 
-    public boolean isDodging(){
+    public boolean isDodging() {
         return dodging;
     }
 
-    public void hit(){
+    public void hit() {
         body.applyAngularImpulse(getUserData().getHitAngularImpulse(), true);
         body.applyLinearImpulse(getUserData().getJumpingLinearImpulse(), body.getWorldCenter(), true);
         hit = true;
     }
 
-    public boolean isHit(){
+    public boolean isHit() {
         return hit;
     }
 
