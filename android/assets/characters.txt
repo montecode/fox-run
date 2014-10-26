@@ -19,29 +19,29 @@ droid_fly2
 fox_dodge1
   rotate: false
   xy: 268, 2
-  size: 254, 110
-  orig: 254, 110
+  size: 254, 111
+  orig: 254, 111
   offset: 0, 0
   index: -1
 fox_dodge2
   rotate: false
   xy: 524, 2
-  size: 262, 110
-  orig: 262, 110
+  size: 262, 111
+  orig: 262, 111
   offset: 0, 0
   index: -1
 fox_fly1
   rotate: false
   xy: 788, 2
-  size: 226, 154
-  orig: 226, 154
+  size: 226, 155
+  orig: 226, 155
   offset: 0, 0
   index: -1
 fox_fly2
   rotate: false
   xy: 1016, 2
-  size: 227, 154
-  orig: 227, 154
+  size: 227, 155
+  orig: 227, 155
   offset: 0, 0
   index: -1
 fox_hit
@@ -54,8 +54,8 @@ fox_hit
 fox_run1
   rotate: false
   xy: 1474, 2
-  size: 226, 185
-  orig: 227, 185
+  size: 226, 186
+  orig: 227, 186
   offset: 0, 0
   index: -1
 fox_run2
@@ -67,70 +67,70 @@ fox_run2
   index: -1
 fox_run3
   rotate: false
-  xy: 2, 189
+  xy: 2, 190
   size: 251, 164
   orig: 251, 164
   offset: 0, 0
   index: -1
 fox_run4
   rotate: false
-  xy: 255, 189
+  xy: 255, 190
   size: 226, 148
   orig: 226, 148
   offset: 0, 0
   index: -1
 fox_run5
   rotate: false
-  xy: 483, 189
+  xy: 483, 190
   size: 226, 148
   orig: 226, 148
   offset: 0, 0
   index: -1
 rock_roll1
   rotate: false
-  xy: 711, 189
+  xy: 711, 190
   size: 175, 175
   orig: 175, 175
   offset: 0, 0
   index: -1
 rock_roll2
   rotate: false
-  xy: 888, 189
+  xy: 888, 190
   size: 175, 175
   orig: 175, 175
   offset: 0, 0
   index: -1
 rocket_fly1
   rotate: false
-  xy: 1065, 189
+  xy: 1065, 190
   size: 352, 188
   orig: 352, 188
   offset: 0, 0
   index: -1
 rocket_fly2
   rotate: false
-  xy: 1419, 189
+  xy: 1419, 190
   size: 351, 188
   orig: 351, 188
   offset: 0, 0
   index: -1
 wall
   rotate: false
-  xy: 1772, 189
+  xy: 1772, 190
   size: 100, 201
   orig: 100, 201
   offset: 0, 0
   index: -1
 wood_roll1
   rotate: false
-  xy: 2, 392
+  xy: 2, 393
   size: 231, 113
   orig: 231, 113
   offset: 0, 0
   index: -1
 wood_roll2
   rotate: false
-  xy: 235, 392
+  xy: 235, 393
   size: 247, 113
   orig: 247, 113
   offset: 0, 0
