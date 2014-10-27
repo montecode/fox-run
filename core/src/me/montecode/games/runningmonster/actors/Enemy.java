@@ -14,6 +14,7 @@ public class Enemy extends GameActor{
 
     private Animation animation;
     private float stateTime;
+    static float speed = 0;
 
     public Enemy(Body body){
 
@@ -37,7 +38,12 @@ public class Enemy extends GameActor{
     @Override
     public void act(float delta){
         super.act(delta);
-        body.setLinearVelocity(getUserData().getLinearVelocity());
+        if(speed < Constants.RUNNER_MAX_SPEED) {
+            speed += delta / 5;
+        }
+        float x = getUserData().getLinearVelocity().x - speed;
+        float y = getUserData().getLinearVelocity().y;
+        body.setLinearVelocity(x, y);
     }
 
     @Override
@@ -48,4 +54,11 @@ public class Enemy extends GameActor{
                 screenRectangle.y, screenRectangle.width * 1.2f, screenRectangle.height * 1.1f);
     }
 
+    public static float getSpeed(){
+        return speed;
+    }
+
+    public static void resetSpeed(){
+        speed = 0;
+    }
 }

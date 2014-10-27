@@ -68,6 +68,7 @@ public class Background extends Actor {
             lastRunTime = runTime;
             if (scrollEnabled) {
                 font.draw(batch, String.valueOf(decimalFormat.format(runTime)) + " m", 600, 450);
+                font.draw(batch, String.valueOf(decimalFormat.format(Enemy.getSpeed())) + " speed", 300, 450);
             } else {
                 checkScore(runTime);
                 font.setScale(2);

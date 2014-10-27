@@ -36,7 +36,7 @@ public class GameStage extends Stage implements ContactListener {
     float runTime;
 
 
-    private final float TIME_STEP = 1 / 300f;
+    private final float TIME_STEP = 1/300f;
     private float accumulator = 0f;
 
     private OrthographicCamera camera;
@@ -62,6 +62,7 @@ public class GameStage extends Stage implements ContactListener {
         setUpWorld();
         renderer = new Box2DDebugRenderer();
         setupCamera();
+        Enemy.resetSpeed();
     }
 
 
@@ -207,7 +208,7 @@ public class GameStage extends Stage implements ContactListener {
                 (BodyUtils.bodyIsEnemy(a) && BodyUtils.bodyIsRunner(b))) {
             runner.hit();
         } else if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsGround(b)) ||
-                (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsRunner(b))) {
+                (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsRunner(b)) && !runner.isHit()){
             runner.landed();
         }
 
