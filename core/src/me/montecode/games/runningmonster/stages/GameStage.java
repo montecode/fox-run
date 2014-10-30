@@ -123,12 +123,14 @@ public class GameStage extends Stage implements ContactListener {
             }
 
 //        }
+
+
     }
 
     private void update(Body body) {
 
         if (runner.isHit()) {
-//                resetGame();
+//          resetGame();
             stopScrolling();
         } else {
             if (!BodyUtils.bodyInBounds(body)) {
