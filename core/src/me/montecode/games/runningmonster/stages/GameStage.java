@@ -36,7 +36,7 @@ public class GameStage extends Stage implements ContactListener {
     float runTime;
 
 
-    private final float TIME_STEP = 1/300f;
+    private final float TIME_STEP = 1 / 300f;
     private float accumulator = 0f;
 
     private OrthographicCamera camera;
@@ -115,12 +115,12 @@ public class GameStage extends Stage implements ContactListener {
 
 //        if (scrollEnabled) {
 
-            accumulator += delta;
+        accumulator += delta;
 
-            while (accumulator >= delta) {
-                world.step(TIME_STEP, 6, 2);
-                accumulator -= TIME_STEP;
-            }
+        while (accumulator >= delta) {
+            world.step(TIME_STEP, 6, 2);
+            accumulator -= TIME_STEP;
+        }
 
 //        }
 
@@ -166,12 +166,12 @@ public class GameStage extends Stage implements ContactListener {
 
         if (rightSideTouched(touchPoint.x, touchPoint.y)) {
             runner.jump();
-            if(!scrollEnabled){
+            if (!scrollEnabled) {
                 resetGame();
             }
         } else if (leftSideTouched(touchPoint.x, touchPoint.y)) {
             runner.dodge();
-            if(!scrollEnabled){
+            if (!scrollEnabled) {
                 resetGame();
             }
         }
@@ -210,7 +210,7 @@ public class GameStage extends Stage implements ContactListener {
                 (BodyUtils.bodyIsEnemy(a) && BodyUtils.bodyIsRunner(b))) {
             runner.hit();
         } else if ((BodyUtils.bodyIsRunner(a) && BodyUtils.bodyIsGround(b)) ||
-                (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsRunner(b)) && !runner.isHit()){
+                (BodyUtils.bodyIsGround(a) && BodyUtils.bodyIsRunner(b)) && !runner.isHit()) {
             runner.landed();
         }
 
