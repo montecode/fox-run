@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import me.montecode.games.runningmonster.RunningMonsterGame;
 import me.montecode.games.runningmonster.stages.GameStage;
 
 public class MainGameScreen implements Screen {
@@ -14,8 +15,8 @@ public class MainGameScreen implements Screen {
     private SpriteBatch batcher;
     private BitmapFont font;
 
-    public MainGameScreen(){
-        stage = new GameStage();
+    public MainGameScreen(RunningMonsterGame game){
+        stage = new GameStage(game);
     }
 
     @Override
