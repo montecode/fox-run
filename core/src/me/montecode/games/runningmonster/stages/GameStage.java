@@ -34,6 +34,7 @@ public class GameStage extends Stage implements ContactListener {
     private  RunningMonsterGame game;
 
     private World world;
+    private Array<Body> bodies;
     private Ground ground;
     private Runner runner;
     private Background background;
@@ -58,7 +59,7 @@ public class GameStage extends Stage implements ContactListener {
         this.game = game;
         setUpWorld();
         renderer = new Box2DDebugRenderer();
-
+        bodies = new Array<Body>(world.getBodyCount());
         setupCamera();
         setupTouchControlAreas();
     }
@@ -111,14 +112,11 @@ public class GameStage extends Stage implements ContactListener {
     public void act(float delta) {
         super.act(delta);
         runTime += delta;
-        Array<Body> bodies = new Array<Body>(world.getBodyCount());
         world.getBodies(bodies);
 
         for (Body body : bodies) {
             update(body);
         }
-
-//        if (scrollEnabled) {
 
         accumulator += delta;
 
@@ -127,15 +125,11 @@ public class GameStage extends Stage implements ContactListener {
             accumulator -= TIME_STEP;
         }
 
-//        }
-
-
     }
 
     private void update(Body body) {
 
         if (runner.isHit()) {
-//          resetGame();
             stopScrolling();
         } else {
             if (!BodyUtils.bodyInBounds(body)) {
