@@ -88,7 +88,6 @@ public class GameStage extends Stage implements ContactListener {
 
     private void setupCamera() {
         camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0f);
         camera.update();
     }
 
@@ -105,7 +104,6 @@ public class GameStage extends Stage implements ContactListener {
     public void act(float delta) {
         super.act(delta);
         runTime += delta;
-
         Array<Body> bodies = new Array<Body>(world.getBodyCount());
         world.getBodies(bodies);
 
