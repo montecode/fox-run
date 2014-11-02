@@ -7,8 +7,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -28,19 +30,17 @@ public class StartGameScreen implements Screen,InputProcessor {
     private OrthographicCamera camera;
     Vector3 touchPoint;
     RunningMonsterGame game;
-    private BitmapFont font;
     private ShapeRenderer shapeRenderer;
 
     public StartGameScreen(RunningMonsterGame game) {
         this.game = game;
         setupCamera();
         batcher = new SpriteBatch();
-        playBounds = new Rectangle(200, 320, 300, 50);
-        aboutBounds = new Rectangle(200, 250, 300, 50);
+        playBounds = new Rectangle(Constants.APP_WIDTH / 2, Constants.APP_HEIGHT / 2, 300, 50);
+        aboutBounds = new Rectangle(Constants.APP_WIDTH / 2, Constants.APP_HEIGHT / 3, 300, 50);
         touchPoint = new Vector3();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
-        font = new BitmapFont();
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setInputProcessor(this);
 
@@ -61,22 +61,25 @@ public class StartGameScreen implements Screen,InputProcessor {
     }
 
     public void draw() {
+
+        TextureRegion textureRegion = new TextureRegion(new Texture(Gdx.files.internal("menu.png")));
+        TextureRegion playBtn = new TextureRegion(new Texture(Gdx.files.internal("play_btn.png")));
+        TextureRegion aboutBtn = new TextureRegion(new Texture(Gdx.files.internal("about_btn.png")));
+
         GL20 gl = Gdx.gl;
         Gdx.gl.glClearColor(243, 236, 205, 1);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         batcher.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(43 / 255.0f, 19 / 255.0f, 55 / 255.0f, 1);
         shapeRenderer.rect(playBounds.getX(), playBounds.getY(), playBounds.width, playBounds.height);
         shapeRenderer.rect(aboutBounds.getX(), aboutBounds.getY(), aboutBounds.width, aboutBounds.height);
         shapeRenderer.end();
 
         batcher.begin();
-        font.setColor(Color.BLACK);
-        font.setScale(1.5f);
-        font.draw(batcher," P l a y ",playBounds.getX()+playBounds.getWidth()/3,playBounds.getY()+playBounds.getHeight()/2);
-        font.draw(batcher," A b o u t  ",aboutBounds.getX()+aboutBounds.getWidth()/3,aboutBounds.getY()+aboutBounds.getHeight()/2);
+        batcher.draw(textureRegion, 0, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
+        batcher.draw(playBtn, playBounds.getX(), playBounds.getY(), playBtn.getRegionWidth(), playBtn.getRegionHeight());
+        batcher.draw(aboutBtn, aboutBounds.getX(), aboutBounds.getY(), aboutBtn.getRegionWidth(), aboutBtn.getRegionHeight());
         batcher.end();
     }
 
