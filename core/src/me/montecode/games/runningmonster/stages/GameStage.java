@@ -94,6 +94,7 @@ public class GameStage extends Stage implements ContactListener {
 
     private void setupCamera() {
         camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        camera.position.set(camera.viewportWidth, camera.viewportHeight, 0f);
         camera.update();
     }
 
