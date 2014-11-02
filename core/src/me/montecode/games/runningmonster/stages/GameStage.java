@@ -1,6 +1,7 @@
 package me.montecode.games.runningmonster.stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -16,10 +17,12 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 
+import me.montecode.games.runningmonster.RunningMonsterGame;
 import me.montecode.games.runningmonster.actors.Background;
 import me.montecode.games.runningmonster.actors.Enemy;
 import me.montecode.games.runningmonster.actors.Ground;
 import me.montecode.games.runningmonster.actors.Runner;
+import me.montecode.games.runningmonster.screens.StartGameScreen;
 import me.montecode.games.runningmonster.utils.BodyUtils;
 import me.montecode.games.runningmonster.utils.Constants;
 import me.montecode.games.runningmonster.utils.WorldUtils;
@@ -28,6 +31,7 @@ import me.montecode.games.runningmonster.utils.WorldUtils;
 public class GameStage extends Stage implements ContactListener {
     private static final int VIEWPORT_WIDTH = Constants.APP_WIDTH;
     private static final int VIEWPORT_HEIGHT = Constants.APP_HEIGHT;
+    private  RunningMonsterGame game;
 
     private World world;
     private Ground ground;
@@ -48,9 +52,10 @@ public class GameStage extends Stage implements ContactListener {
     private Vector3 touchPoint;
     private boolean scrollEnabled;
 
-    public GameStage() {
+    public GameStage(RunningMonsterGame game) {
         super(new ScalingViewport(Scaling.stretch, VIEWPORT_WIDTH, VIEWPORT_HEIGHT,
                 new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)));
+        this.game = game;
         setUpWorld();
         renderer = new Box2DDebugRenderer();
 
@@ -80,6 +85,7 @@ public class GameStage extends Stage implements ContactListener {
         ground = new Ground(WorldUtils.createGround(world));
         addActor(ground);
     }
+
 
     private void setUpRunner() {
         runner = new Runner(WorldUtils.createRunner(world));
@@ -156,6 +162,16 @@ public class GameStage extends Stage implements ContactListener {
     public void draw() {
         super.draw();
         renderer.render(world, camera.combined);
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+
+        if (keycode == Input.Keys.BACK) {
+            game.setScreen(new StartGameScreen(game));
+        }
+
+        return true;
     }
 
     @Override

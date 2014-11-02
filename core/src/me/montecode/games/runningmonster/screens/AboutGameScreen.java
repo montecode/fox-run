@@ -9,55 +9,30 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 
 import me.montecode.games.runningmonster.RunningMonsterGame;
 import me.montecode.games.runningmonster.utils.Constants;
 
 /**
- * Created by stevyhacker on 31.10.14..
+ * Created by stevyhacker on 1.11.14..
  */
-public class StartGameScreen implements Screen,InputProcessor {
+public class AboutGameScreen implements Screen, InputProcessor {
+
+    private RunningMonsterGame game;
     private static final int VIEWPORT_WIDTH = Constants.APP_WIDTH;
     private static final int VIEWPORT_HEIGHT = Constants.APP_HEIGHT;
-    private final SpriteBatch batcher;
-    private final Rectangle playBounds;
-    private final Rectangle aboutBounds;
     private OrthographicCamera camera;
-    Vector3 touchPoint;
-    RunningMonsterGame game;
+    private SpriteBatch batcher;
     private BitmapFont font;
-    private ShapeRenderer shapeRenderer;
 
-    public StartGameScreen(RunningMonsterGame game) {
+    public AboutGameScreen(RunningMonsterGame game) {
         this.game = game;
         setupCamera();
-        batcher = new SpriteBatch();
-        playBounds = new Rectangle(200, 320, 300, 50);
-        aboutBounds = new Rectangle(200, 250, 300, 50);
-        touchPoint = new Vector3();
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setProjectionMatrix(camera.combined);
         font = new BitmapFont();
+        batcher = new SpriteBatch();
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setInputProcessor(this);
 
-    }
-
-    public void update() {
-        if (Gdx.input.justTouched()) {
-            camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-
-            if (playBounds.contains(touchPoint.x, touchPoint.y)) {
-                game.setScreen(new MainGameScreen(game));
-            }
-
-            if (aboutBounds.contains(touchPoint.x, touchPoint.y)) {
-                game.setScreen(new AboutGameScreen(game));
-            }
-        }
     }
 
     public void draw() {
@@ -65,25 +40,24 @@ public class StartGameScreen implements Screen,InputProcessor {
         Gdx.gl.glClearColor(243, 236, 205, 1);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
-        batcher.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(43 / 255.0f, 19 / 255.0f, 55 / 255.0f, 1);
-        shapeRenderer.rect(playBounds.getX(), playBounds.getY(), playBounds.width, playBounds.height);
-        shapeRenderer.rect(aboutBounds.getX(), aboutBounds.getY(), aboutBounds.width, aboutBounds.height);
-        shapeRenderer.end();
+
 
         batcher.begin();
         font.setColor(Color.BLACK);
         font.setScale(1.5f);
-        font.draw(batcher," P l a y ",playBounds.getX()+playBounds.getWidth()/3,playBounds.getY()+playBounds.getHeight()/2);
-        font.draw(batcher," A b o u t  ",aboutBounds.getX()+aboutBounds.getWidth()/3,aboutBounds.getY()+aboutBounds.getHeight()/2);
+        font.draw(batcher, " Developed by MonteCode ", 350, 350);
         batcher.end();
     }
 
+
     @Override
     public void render(float delta) {
-        update();
+//        update();
         draw();
+    }
+
+    private void update() {
+
     }
 
     @Override
@@ -122,7 +96,6 @@ public class StartGameScreen implements Screen,InputProcessor {
         camera.update();
     }
 
-
     @Override
     public boolean keyDown(int keycode) {
         return false;
@@ -132,7 +105,7 @@ public class StartGameScreen implements Screen,InputProcessor {
     public boolean keyUp(int keycode) {
 
         if (keycode == Input.Keys.BACK) {
-            Gdx.app.exit();
+            game.setScreen(new StartGameScreen(game));
         }
 
         return true;
