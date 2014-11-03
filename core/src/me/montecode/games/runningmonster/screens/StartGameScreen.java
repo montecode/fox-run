@@ -4,11 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -32,17 +30,25 @@ public class StartGameScreen implements Screen,InputProcessor {
     RunningMonsterGame game;
     private ShapeRenderer shapeRenderer;
 
+    TextureRegion textureRegion;
+    TextureRegion playBtn;
+    TextureRegion aboutBtn;
+
     public StartGameScreen(RunningMonsterGame game) {
         this.game = game;
         setupCamera();
         batcher = new SpriteBatch();
         playBounds = new Rectangle(Constants.APP_WIDTH / 2, Constants.APP_HEIGHT / 2, 300, 50);
-        aboutBounds = new Rectangle(Constants.APP_WIDTH / 2, Constants.APP_HEIGHT / 3, 300, 50);
+        aboutBounds = new Rectangle(Constants.APP_WIDTH / 2, Constants.APP_HEIGHT / 3.5f, 300, 50);
         touchPoint = new Vector3();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setInputProcessor(this);
+        textureRegion = new TextureRegion(new Texture(Gdx.files.internal("menu.png")));
+        playBtn = new TextureRegion(new Texture(Gdx.files.internal("play_btn.png")));
+        aboutBtn = new TextureRegion(new Texture(Gdx.files.internal("about_btn.png")));
+
 
     }
 
@@ -61,10 +67,6 @@ public class StartGameScreen implements Screen,InputProcessor {
     }
 
     public void draw() {
-
-        TextureRegion textureRegion = new TextureRegion(new Texture(Gdx.files.internal("menu.png")));
-        TextureRegion playBtn = new TextureRegion(new Texture(Gdx.files.internal("play_btn.png")));
-        TextureRegion aboutBtn = new TextureRegion(new Texture(Gdx.files.internal("about_btn.png")));
 
         GL20 gl = Gdx.gl;
         Gdx.gl.glClearColor(243, 236, 205, 1);
