@@ -1,9 +1,12 @@
 package me.montecode.games.runningmonster.stages;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -22,6 +25,9 @@ import me.montecode.games.runningmonster.actors.Background;
 import me.montecode.games.runningmonster.actors.Enemy;
 import me.montecode.games.runningmonster.actors.Ground;
 import me.montecode.games.runningmonster.actors.Runner;
+import me.montecode.games.runningmonster.box2d.EnemyUserData;
+import me.montecode.games.runningmonster.box2d.UserData;
+import me.montecode.games.runningmonster.enums.EnemyType;
 import me.montecode.games.runningmonster.screens.StartGameScreen;
 import me.montecode.games.runningmonster.utils.BodyUtils;
 import me.montecode.games.runningmonster.utils.Constants;
@@ -52,6 +58,9 @@ public class GameStage extends Stage implements ContactListener {
 
     private Vector3 touchPoint;
     private boolean scrollEnabled;
+    
+    private Array<Enemy> enemies;
+    //private Enemy[] enemies = new Enemy[]{};
 
     public GameStage(RunningMonsterGame game) {
         super(new ScalingViewport(Scaling.stretch, VIEWPORT_WIDTH, VIEWPORT_HEIGHT,
@@ -79,7 +88,8 @@ public class GameStage extends Stage implements ContactListener {
         setUpBackground();
         setUpGround();
         setUpRunner();
-        createEnemy();
+        createEnemies();
+        setRandomEnemy();
     }
 
     private void setUpGround() {
@@ -115,7 +125,8 @@ public class GameStage extends Stage implements ContactListener {
         world.getBodies(bodies);
 
         for (Body body : bodies) {
-            update(body);
+        	update(body);
+        	Gdx.app.log("GameStage", body.getLinearVelocity().toString());
         }
 
         accumulator += delta;
@@ -124,19 +135,44 @@ public class GameStage extends Stage implements ContactListener {
             world.step(TIME_STEP, 6, 2);
             accumulator -= TIME_STEP;
         }
+        
 
     }
 
     private void update(Body body) {
-
-        if (runner.isHit()) {
+    	
+    	if (runner.isHit()) {
             stopScrolling();
         } else {
-            if (!BodyUtils.bodyInBounds(body)) {
+            if (!BodyUtils.bodyInBounds(body) && BodyUtils.bodyIsEnemy(body)) {
+            	
+            	EnemyUserData enemyUserData = (EnemyUserData) body.getUserData();
+                enemyUserData.setLinearVelocity(new Vector2(0, 0));
+                
+                body.setTransform(new Vector2(Constants.ENEMY_X, body.getPosition().y), 0f);
+                
+                
+            	
+            	
+            	
                 if (BodyUtils.bodyIsEnemy(body) && !runner.isHit()) {
-                    createEnemy();
+                    //createEnemy();
+                	//TODO: set random enemy velocity
+                	//randomEnemyType = RandomUtils.getRandomEnemyType();
+                	//enemies.random.setLinearVelocity(Constants.ENEMY_LINEAR_VELOCITY);
+                	
+                	setRandomEnemy();
+                	//EnemyUserData.setLinearVelocity()
+                	
                 }
-                world.destroyBody(body);
+                //world.destroyBody(body);
+                //TODO: stop enemy that reached left side (velocity.x = 0) and set its 
+                //position on left side
+                
+                //body.setLinearVelocity(new Vector2(0, 0));
+                
+                
+                
             }
 
         }
@@ -148,9 +184,32 @@ public class GameStage extends Stage implements ContactListener {
         background.setScrollDisabled(false);
     }
 
-    private void createEnemy() {
-        Enemy enemy = new Enemy(WorldUtils.createEnemy(world));
-        addActor(enemy);
+    private void createEnemies() {
+        Enemy fs = new Enemy(WorldUtils.createEnemy(world, EnemyType.FLYING_SMALL));
+        Enemy fw = new Enemy(WorldUtils.createEnemy(world, EnemyType.FLYING_WIDE));
+        Enemy rb = new Enemy(WorldUtils.createEnemy(world, EnemyType.RUNNING_BIG));
+        Enemy rl = new Enemy(WorldUtils.createEnemy(world, EnemyType.RUNNING_LONG));
+        Enemy rs = new Enemy(WorldUtils.createEnemy(world, EnemyType.RUNNING_SMALL));
+        Enemy rw = new Enemy(WorldUtils.createEnemy(world, EnemyType.RUNNING_WIDE));
+        addActor(fs);
+        addActor(fw);
+        addActor(rb);
+        addActor(rl);
+        addActor(rs);
+        addActor(rw);
+        
+        enemies = new Array<Enemy>(6);
+        enemies.addAll(fs, fw, rb, rl, rs, rw);
+    }
+   
+    
+    public void setRandomEnemy(){
+    	
+    	//get random enemy from array and set its linear velocity
+    	
+    	//enemies.random().setDefaultLinearVelocity();
+    	Enemy currentEnemy = enemies.random();
+    	currentEnemy.setDefaultLinearVelocity();
     }
 
     @Override

@@ -28,7 +28,7 @@ public class Constants {
     public static final float RUNNER_HIT_ANGULAR_IMPULSE = 40f;
     public static final float RUNNER_MAX_SPEED = 10f;
 
-    public static final float ENEMY_X = 25f;
+    public static final float ENEMY_X = 30f;
     public static final float ENEMY_DENSITY = RUNNER_DENSITY;
     public static final float RUNNING_SHORT_ENEMY_Y = 1.5f;
     public static final float RUNNING_LONG_ENEMY_Y = 2f;

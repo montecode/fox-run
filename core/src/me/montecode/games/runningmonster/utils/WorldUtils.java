@@ -48,8 +48,8 @@ public class WorldUtils {
         return body;
     }
 
-    public static Body createEnemy(World world) {
-        EnemyType enemyType = RandomUtils.getRandomEnemyType();
+    public static Body createEnemy(World world, EnemyType enemyType) {
+        //EnemyType enemyType = RandomUtils.getRandomEnemyType();
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.KinematicBody;
         bodyDef.position.set(new Vector2(enemyType.getX(), enemyType.getY()));

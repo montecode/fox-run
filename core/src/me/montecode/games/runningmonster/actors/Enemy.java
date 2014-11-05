@@ -41,7 +41,7 @@ public class Enemy extends GameActor{
         if(speed < Constants.RUNNER_MAX_SPEED) {
             speed += delta / 5;
         }
-        float x = getUserData().getLinearVelocity().x - speed;
+        float x = getUserData().getLinearVelocity().x; //- speed;
         float y = getUserData().getLinearVelocity().y;
         body.setLinearVelocity(x, y);
     }
@@ -60,5 +60,9 @@ public class Enemy extends GameActor{
 
     public static void resetSpeed(){
         speed = 0;
+    }
+    
+    public void setDefaultLinearVelocity(){
+    	getUserData().setLinearVelocity(Constants.ENEMY_LINEAR_VELOCITY);
     }
 }
