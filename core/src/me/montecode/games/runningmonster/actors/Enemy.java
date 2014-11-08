@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+
 import me.montecode.games.runningmonster.box2d.EnemyUserData;
 import me.montecode.games.runningmonster.utils.Constants;
 
@@ -38,10 +40,12 @@ public class Enemy extends GameActor{
     @Override
     public void act(float delta){
         super.act(delta);
-        if(speed < Constants.RUNNER_MAX_SPEED) {
-            speed += delta / 5;
+        Gdx.app.log("SPEED", String.valueOf(speed));
+        if(speed < Constants.RUNNER_MAX_SPEED + 2) {
+            speed += delta / 50;
         }
-        float x = getUserData().getLinearVelocity().x; //- speed;
+        float x = getUserData().getLinearVelocity().x;
+        if(x != 0) x -= speed;
         float y = getUserData().getLinearVelocity().y;
         body.setLinearVelocity(x, y);
     }
@@ -64,5 +68,9 @@ public class Enemy extends GameActor{
     
     public void setDefaultLinearVelocity(){
     	getUserData().setLinearVelocity(Constants.ENEMY_LINEAR_VELOCITY);
+    }
+
+    public void setLinearVelocity(Vector2 v){
+        getUserData().setLinearVelocity(v);
     }
 }

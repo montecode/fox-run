@@ -190,6 +190,7 @@ public class GameStage extends Stage implements ContactListener {
     	
     	//enemies.random().setDefaultLinearVelocity();
     	Enemy currentEnemy = enemies.random();
+        currentEnemy.setLinearVelocity(new Vector2(Constants.ENEMY_LINEAR_VELOCITY.x - currentEnemy.getSpeed() * 10, 0));
     	currentEnemy.setDefaultLinearVelocity();
     }
 
