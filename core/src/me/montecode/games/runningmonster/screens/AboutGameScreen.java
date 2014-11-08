@@ -25,14 +25,12 @@ public class AboutGameScreen implements Screen, InputProcessor {
     private static final int VIEWPORT_HEIGHT = Constants.APP_HEIGHT;
     private OrthographicCamera camera;
     private SpriteBatch batcher;
-    private BitmapFont font;
     private TextureRegion about;
     
 
     public AboutGameScreen(RunningMonsterGame game) {
         this.game = game;
         setupCamera();
-        font = new BitmapFont();
         batcher = new SpriteBatch();
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setInputProcessor(this);
@@ -49,7 +47,7 @@ public class AboutGameScreen implements Screen, InputProcessor {
 
         batcher.begin();
         
-        batcher.draw(about, 0, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
+        batcher.draw(about, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         
         batcher.end();
     }
