@@ -7,8 +7,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import me.montecode.games.runningmonster.RunningMonsterGame;
 import me.montecode.games.runningmonster.utils.Constants;
@@ -24,6 +26,8 @@ public class AboutGameScreen implements Screen, InputProcessor {
     private OrthographicCamera camera;
     private SpriteBatch batcher;
     private BitmapFont font;
+    private TextureRegion about;
+    
 
     public AboutGameScreen(RunningMonsterGame game) {
         this.game = game;
@@ -32,6 +36,7 @@ public class AboutGameScreen implements Screen, InputProcessor {
         batcher = new SpriteBatch();
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setInputProcessor(this);
+        about = new TextureRegion(new Texture(Gdx.files.internal("about.png")));
 
     }
 
@@ -43,9 +48,9 @@ public class AboutGameScreen implements Screen, InputProcessor {
 
 
         batcher.begin();
-        font.setColor(Color.BLACK);
-        font.setScale(1.5f);
-        font.draw(batcher, " Developed by MonteCode ", 350, 350);
+        
+        batcher.draw(about, 0, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
+        
         batcher.end();
     }
 
