@@ -11,6 +11,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 
 import me.montecode.games.runningmonster.RunningMonsterGame;
 import me.montecode.games.runningmonster.utils.Constants;
@@ -25,16 +28,31 @@ public class AboutGameScreen implements Screen, InputProcessor {
     private static final int VIEWPORT_HEIGHT = Constants.APP_HEIGHT;
     private OrthographicCamera camera;
     private SpriteBatch batcher;
+    private BitmapFont font;
     private TextureRegion about;
-    
+    private Rectangle linkRect;
+    private ShapeRenderer shapeRenderer;
+    private int firstTouch;
 
     public AboutGameScreen(RunningMonsterGame game) {
         this.game = game;
         setupCamera();
         batcher = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
         Gdx.input.setCatchBackKey(true);
         Gdx.input.setInputProcessor(this);
         about = new TextureRegion(new Texture(Gdx.files.internal("about.png")));
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator((Gdx.files.internal("RobotoCondensed-Regular.ttf")));
+        FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.kerning = true;
+        fontParameter.size = (int) (20 * Gdx.graphics.getDensity());
+        Gdx.app.log("density", "display density : " + String.valueOf(Gdx.graphics.getDensity()));
+        linkRect = new Rectangle(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 4, 200, 200);
+        font = generator.generateFont(fontParameter);
+        font.setColor(Color.WHITE);
+        generator.dispose();
+        firstTouch = 0;
 
     }
 
@@ -45,11 +63,22 @@ public class AboutGameScreen implements Screen, InputProcessor {
         camera.update();
 
 
+        batcher.setProjectionMatrix(camera.combined);
+
         batcher.begin();
-        
+
+
         batcher.draw(about, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-        
+        font.draw(batcher, "www.montecode.me", VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 4);
+
+
         batcher.end();
+
+//        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+//        shapeRenderer.setColor(Color.WHITE);
+//        shapeRenderer.rect(VIEWPORT_WIDTH / 2 - 165, VIEWPORT_HEIGHT / 2 - 150, 330, 300);
+//        shapeRenderer.end();
+
     }
 
 
@@ -126,7 +155,12 @@ public class AboutGameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
+        firstTouch++;
+        if (linkRect.contains(screenX, screenY) && firstTouch > 1) {
+            Gdx.net.openURI("http://montecode.me");
+        }
+
+        return true;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package me.montecode.games.runningmonster.stages;
 
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -26,7 +24,6 @@ import me.montecode.games.runningmonster.actors.Enemy;
 import me.montecode.games.runningmonster.actors.Ground;
 import me.montecode.games.runningmonster.actors.Runner;
 import me.montecode.games.runningmonster.box2d.EnemyUserData;
-import me.montecode.games.runningmonster.box2d.UserData;
 import me.montecode.games.runningmonster.enums.EnemyType;
 import me.montecode.games.runningmonster.screens.StartGameScreen;
 import me.montecode.games.runningmonster.utils.BodyUtils;
@@ -126,7 +123,7 @@ public class GameStage extends Stage implements ContactListener {
 
         for (Body body : bodies) {
         	update(body);
-        	Gdx.app.log("GameStage", body.getLinearVelocity().toString());
+//        	Gdx.app.log("GameStage", body.getLinearVelocity().toString());
         }
 
         accumulator += delta;

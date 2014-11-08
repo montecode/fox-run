@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -20,7 +21,7 @@ public class Background extends Actor {
     private Rectangle textureRegionBounds1;
     private Rectangle textureRegionBounds2;
     private int speed = 100;
-    private BitmapFont font = new BitmapFont();
+    private BitmapFont font;
     float runTime;
     float lastRunTime;
     DecimalFormat decimalFormat = new DecimalFormat("###.##");
@@ -34,6 +35,15 @@ public class Background extends Actor {
         textureRegion = new TextureRegion(new Texture(Gdx.files.internal(Constants.BACKGROUND_IMAGE_PATH)));
         textureRegionBounds1 = new Rectangle(0 - Constants.APP_WIDTH / 2, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
         textureRegionBounds2 = new Rectangle(Constants.APP_WIDTH / 2, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
+
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator((Gdx.files.internal("RobotoCondensed-Regular.ttf")));
+        FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter.kerning = true;
+        fontParameter.size = (int) (20 * Gdx.graphics.getDensity());
+        font = generator.generateFont(fontParameter);
+        font.setColor(Color.BLACK);
+        generator.dispose();
 
         prefs = Gdx.app.getPreferences("RunningMonster");
 
@@ -71,7 +81,7 @@ public class Background extends Actor {
 //                font.draw(batch, String.valueOf(decimalFormat.format(Enemy.getSpeed())) + " speed", 300, 450);
             } else {
                 checkScore(runTime);
-                font.setScale(2);
+//                font.setScale(2);
                 font.setColor(Color.BLACK);
                 font.draw(batch, String.valueOf("Your highest score: " + decimalFormat.format(getHighScore())) + " m", 250, 375);
                 font.draw(batch, String.valueOf("Your score: " + decimalFormat.format(runTime)) + " m", 250, 300);
@@ -82,7 +92,7 @@ public class Background extends Actor {
                 font.draw(batch, String.valueOf(decimalFormat.format(runTime)) + " m", 600, 450);
             } else {
                 checkScore(runTime);
-                font.setScale(2);
+//                font.setScale(2);
                 font.setColor(Color.BLACK);
                 font.draw(batch, String.valueOf("Your highest score: " + decimalFormat.format(getHighScore())) + " m", 250, 375);
                 font.draw(batch, String.valueOf("Your current score: " + decimalFormat.format(runTime)) + " m", 250, 300);
