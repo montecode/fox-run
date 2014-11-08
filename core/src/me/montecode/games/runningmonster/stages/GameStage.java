@@ -151,28 +151,12 @@ public class GameStage extends Stage implements ContactListener {
                 
                 body.setTransform(new Vector2(Constants.ENEMY_X, body.getPosition().y), 0f);
                 
-                
-            	
-            	
-            	
                 if (BodyUtils.bodyIsEnemy(body) && !runner.isHit()) {
-                    //createEnemy();
-                	//TODO: set random enemy velocity
-                	//randomEnemyType = RandomUtils.getRandomEnemyType();
-                	//enemies.random.setLinearVelocity(Constants.ENEMY_LINEAR_VELOCITY);
                 	
                 	setRandomEnemy();
-                	//EnemyUserData.setLinearVelocity()
                 	
                 }
-                //world.destroyBody(body);
-                //TODO: stop enemy that reached left side (velocity.x = 0) and set its 
-                //position on left side
-                
-                //body.setLinearVelocity(new Vector2(0, 0));
-                
-                
-                
+       
             }
 
         }
