@@ -38,8 +38,8 @@ public class StartGameScreen implements Screen,InputProcessor {
         this.game = game;
         setupCamera();
         batcher = new SpriteBatch();
-        playBounds = new Rectangle(Constants.APP_WIDTH / 2, Constants.APP_HEIGHT / 2, 300, 50);
-        aboutBounds = new Rectangle(Constants.APP_WIDTH / 2, Constants.APP_HEIGHT / 3.5f, 300, 50);
+        playBounds = new Rectangle(Constants.APP_WIDTH / 2, Constants.APP_HEIGHT / 2, 200, 75);
+        aboutBounds = new Rectangle(Constants.APP_WIDTH / 2, Constants.APP_HEIGHT / 3.5f, 200, 75);
         touchPoint = new Vector3();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(camera.combined);
@@ -73,16 +73,19 @@ public class StartGameScreen implements Screen,InputProcessor {
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         batcher.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.rect(playBounds.getX(), playBounds.getY(), playBounds.width, playBounds.height);
-        shapeRenderer.rect(aboutBounds.getX(), aboutBounds.getY(), aboutBounds.width, aboutBounds.height);
-        shapeRenderer.end();
+
 
         batcher.begin();
         batcher.draw(textureRegion, 0, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
         batcher.draw(playBtn, playBounds.getX(), playBounds.getY(), playBtn.getRegionWidth(), playBtn.getRegionHeight());
         batcher.draw(aboutBtn, aboutBounds.getX(), aboutBounds.getY(), aboutBtn.getRegionWidth(), aboutBtn.getRegionHeight());
         batcher.end();
+
+//        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+//        shapeRenderer.setColor(Color.WHITE);
+//        shapeRenderer.rect(playBounds.getX(), playBounds.getY(), playBounds.width, playBounds.height);
+//        shapeRenderer.rect(aboutBounds.getX(), aboutBounds.getY(), aboutBounds.width, aboutBounds.height);
+//        shapeRenderer.end();
     }
 
     @Override
