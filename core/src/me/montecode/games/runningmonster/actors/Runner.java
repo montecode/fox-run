@@ -70,7 +70,7 @@ public class Runner extends GameActor {
         else {
             // Running
             stateTime += Gdx.graphics.getDeltaTime();
-            batch.draw(runningAnimation.getKeyFrame(stateTime, true), x, y, width, screenRectangle.height);
+            batch.draw(runningAnimation.getKeyFrame(stateTime, true), x, 30, width, screenRectangle.height);
         }
 
     }
