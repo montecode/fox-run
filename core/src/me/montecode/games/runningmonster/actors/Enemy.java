@@ -40,13 +40,14 @@ public class Enemy extends GameActor{
     @Override
     public void act(float delta){
         super.act(delta);
-        Gdx.app.log("SPEED", String.valueOf(speed));
+//        Gdx.app.log("SPEED", String.valueOf(speed));
         if(speed < Constants.RUNNER_MAX_SPEED + 2) {
             speed += delta / 50;
         }
-        else{
-        	speed = 0;
-        }
+        // Ne može ovo ovako da se mijenja, nekad ti na sred skoka promjeni brzinu pa neka ga sad isključeno
+//        else{
+//        	speed = 0;
+//        }
         float x = getUserData().getLinearVelocity().x;
         if(x != 0) x -= speed;
         float y = getUserData().getLinearVelocity().y;

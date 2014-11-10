@@ -58,7 +58,7 @@ public class Runner extends GameActor {
 
         if (dodging) {
             stateTime += Gdx.graphics.getDeltaTime();
-            batch.draw(dodgingAnimation.getKeyFrame(stateTime, true), x, 30, width, screenRectangle.height * 3 / 4);
+            batch.draw(dodgingAnimation.getKeyFrame(stateTime, true), x, y, width, screenRectangle.height * 3 / 4);
         } else if (hit) {
             // When he's hit we also want to apply rotation if the body has been rotated
             batch.draw(hitTexture, x, y, width * 0.5f, screenRectangle.height * 0.5f, width, screenRectangle.height, 1f,
