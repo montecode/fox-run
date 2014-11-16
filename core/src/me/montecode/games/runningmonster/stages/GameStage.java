@@ -40,6 +40,7 @@ public class GameStage extends Stage implements ContactListener {
     private Array<Body> bodies;
     private Ground ground;
     private Runner runner;
+    private Runner runner2;
     private Background background;
     float runTime;
 
@@ -96,13 +97,15 @@ public class GameStage extends Stage implements ContactListener {
 
 
     private void setUpRunner() {
-        runner = new Runner(WorldUtils.createRunner(world));
+        runner = new Runner(WorldUtils.createRunner(world)[1]);
+        //runner2 = new Runner(WorldUtils.createRunner(world)[1]);
         addActor(runner);
+        //addActor(runner2);
     }
 
     private void setupCamera() {
-        camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-        camera.position.set(camera.viewportWidth, camera.viewportHeight, 0f);
+        camera = new OrthographicCamera(VIEWPORT_WIDTH / 10, VIEWPORT_HEIGHT / 10);
+        camera.position.set(camera.viewportWidth / 4, camera.viewportHeight / 4, 0f);
         camera.update();
     }
 

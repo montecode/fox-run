@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.World;
 
 import me.montecode.games.runningmonster.box2d.RunnerUserData;
 import me.montecode.games.runningmonster.utils.Constants;
@@ -21,6 +23,8 @@ public class Runner extends GameActor {
     private Animation flyingAnimation;
     private TextureRegion hitTexture;
     private float stateTime;
+
+	Filter filter = new Filter();
 
     public Runner(Body body) {
         super(body);
@@ -53,25 +57,29 @@ public class Runner extends GameActor {
         super.draw(batch, parentAlpha);
 
         float x = 2f; //screenRectangle.x - (screenRectangle.width * 0.1f);
-        float y = screenRectangle.y;
+        float y = 30f;
+        float y1 = screenRectangle.y;
+        float x1 = screenRectangle.x - (screenRectangle.width * 0.1f);
         float width = screenRectangle.width * 1.2f;
 
         if (dodging) {
             stateTime += Gdx.graphics.getDeltaTime();
-            batch.draw(dodgingAnimation.getKeyFrame(stateTime, true), x, y, width, screenRectangle.height * 3 / 4);
+            batch.draw(dodgingAnimation.getKeyFrame(stateTime, true), x, y - 2f, width, screenRectangle.height * 3f / 4f);
         } else if (hit) {
             // When he's hit we also want to apply rotation if the body has been rotated
-            batch.draw(hitTexture, x, y, width * 0.5f, screenRectangle.height * 0.5f, width, screenRectangle.height, 1f,
+            batch.draw(hitTexture, x1, y1, width * 0.5f, screenRectangle.height * 0.5f, width, screenRectangle.height, 1f,
                     1f, (float) Math.toDegrees(body.getAngle()));
         } else if (jumping) {
             stateTime += Gdx.graphics.getDeltaTime();
-            batch.draw(flyingAnimation.getKeyFrame(stateTime, true), x, y, width, screenRectangle.height);
+            batch.draw(flyingAnimation.getKeyFrame(stateTime, true), x, y1, width, screenRectangle.height);
         }
         else {
             // Running
             stateTime += Gdx.graphics.getDeltaTime();
-            batch.draw(runningAnimation.getKeyFrame(stateTime, true), x, 30, width, screenRectangle.height);
+            batch.draw(runningAnimation.getKeyFrame(stateTime, true), x, y, width, screenRectangle.height);
         }
+        
+        
 
     }
 
@@ -82,7 +90,7 @@ public class Runner extends GameActor {
     }
 
     public void jump() {
-        if (!(jumping || dodging || hit)) {
+        if (!jumping && !dodging && !hit) {
             body.applyLinearImpulse(getUserData().getJumpingLinearImpulse(), body.getWorldCenter(), true);
             jumping = true;
         }
@@ -93,8 +101,11 @@ public class Runner extends GameActor {
     }
 
     public void dodge() {
-        if (!(jumping || hit)) {
-            body.setTransform(getUserData().getDodgePosition(), 0);
+        if (!jumping && !hit) {
+			filter.categoryBits = 2;
+			filter.maskBits = 4;
+        	body.getFixtureList().get(0).setFilterData(filter);
+        	
             dodging = true;
         }
     }
@@ -102,7 +113,9 @@ public class Runner extends GameActor {
     public void stopDodge() {
         dodging = false;
         if (!hit) {
-            body.setTransform(getUserData().getRunningPosition(), 0f);
+        	filter.categoryBits = 1;
+			filter.maskBits = 1;
+			body.getFixtureList().get(0).setFilterData(filter);
         }
     }
 

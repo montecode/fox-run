@@ -57,7 +57,7 @@ public class StartGameScreen implements Screen,InputProcessor {
             camera.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
             if (playBounds.contains(touchPoint.x, touchPoint.y)) {
-                game.setScreen(new MainGameScreen(game));
+                game.setScreen(new MainGameScreen(game));        
             }
 
             if (aboutBounds.contains(touchPoint.x, touchPoint.y)) {

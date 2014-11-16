@@ -32,7 +32,7 @@ public class Constants {
     public static final float ENEMY_DENSITY = RUNNER_DENSITY;
     public static final float RUNNING_SHORT_ENEMY_Y = 1.5f;
     public static final float RUNNING_LONG_ENEMY_Y = 2f;
-    public static final float FLYING_ENEMY_Y = 3.5f;
+    public static final float FLYING_ENEMY_Y = 3f;
     public static final Vector2 ENEMY_LINEAR_VELOCITY = new Vector2(-10f, 0);
 
     public static final String BACKGROUND_IMAGE_PATH = "background.png";
