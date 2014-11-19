@@ -74,13 +74,13 @@ public class AboutGameScreen implements Screen, InputProcessor {
 
         batcher.end();
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.WHITE);
-        shapeRenderer.rect(1,1, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+//        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+//        shapeRenderer.setColor(Color.WHITE);
+//        shapeRenderer.rect(1,1, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 //        linkRect = new Rectangle(VIEWPORT_WIDTH, VIEWPORT_HEIGHT , Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
 //        shapeRenderer.rect(VIEWPORT_WIDTH / 2 - 165, VIEWPORT_HEIGHT / 2 - 150, 330, 300);
-        shapeRenderer.end();
+//        shapeRenderer.end();
 
     }
 

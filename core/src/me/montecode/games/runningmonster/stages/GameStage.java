@@ -40,7 +40,6 @@ public class GameStage extends Stage implements ContactListener {
     private Array<Body> bodies;
     private Ground ground;
     private Runner runner;
-    private Runner runner2;
     private Background background;
     float runTime;
 
@@ -58,7 +57,6 @@ public class GameStage extends Stage implements ContactListener {
     private boolean scrollEnabled;
     
     private Array<Enemy> enemies;
-    //private Enemy[] enemies = new Enemy[]{};
 
     public GameStage(RunningMonsterGame game) {
         super(new ScalingViewport(Scaling.stretch, VIEWPORT_WIDTH, VIEWPORT_HEIGHT,
@@ -69,6 +67,13 @@ public class GameStage extends Stage implements ContactListener {
         bodies = new Array<Body>(world.getBodyCount());
         setupCamera();
         setupTouchControlAreas();
+        stopStartScrolling();
+    }
+
+    private void stopStartScrolling() {
+        scrollEnabled = false;
+        background.setScrollDisabled(false);
+        background.setStartIntro(true);
     }
 
     private void resetGame() {
@@ -126,7 +131,6 @@ public class GameStage extends Stage implements ContactListener {
 
         for (Body body : bodies) {
         	update(body);
-//        	Gdx.app.log("GameStage", body.getLinearVelocity().toString());
         }
 
         accumulator += delta;

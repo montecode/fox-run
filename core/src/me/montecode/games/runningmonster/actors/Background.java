@@ -27,6 +27,7 @@ public class Background extends Actor {
     DecimalFormat decimalFormat = new DecimalFormat("###.##");
     private boolean scrollEnabled;
     private static Preferences prefs;
+    private boolean intro;
 
     public Background() {
         runTime = 0;
@@ -74,34 +75,41 @@ public class Background extends Actor {
                 Constants.APP_HEIGHT);
         font.setColor(Color.BLACK);
 //  Display FPS font.draw(batch, "FPS:" + Gdx.graphics.getFramesPerSecond(),600 , 450);// Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight()/2);
-        if (runTime > lastRunTime + 0.2) {
-            lastRunTime = runTime;
-            if (scrollEnabled) {
-                font.draw(batch, String.valueOf(decimalFormat.format(runTime)) + " m", 600, 450);
-//                font.draw(batch, String.valueOf(decimalFormat.format(Enemy.getSpeed())) + " speed", 300, 450);
-            } else {
-                checkScore(runTime);
-//                font.setScale(2);
-                font.setColor(Color.BLACK);
-                font.draw(batch, String.valueOf("Your highest score: " + decimalFormat.format(getHighScore())) + " m", 250, 375);
-                font.draw(batch, String.valueOf("Your score: " + decimalFormat.format(runTime)) + " m", 250, 300);
+        if (intro) {
+            font.draw(batch, "Touch left side of the screen to dodge",160,320);
+            font.draw(batch, "Touch right side of the screen to jump",160,240);
 
-            }
         } else {
-            if (scrollEnabled) {
-                font.draw(batch, String.valueOf(decimalFormat.format(runTime)) + " m", 600, 450);
-            } else {
-                checkScore(runTime);
-//                font.setScale(2);
-                font.setColor(Color.BLACK);
-                font.draw(batch, String.valueOf("Your highest score: " + decimalFormat.format(getHighScore())) + " m", 250, 375);
-                font.draw(batch, String.valueOf("Your current score: " + decimalFormat.format(runTime)) + " m", 250, 300);
 
+            if (runTime > lastRunTime + 0.2) {
+                lastRunTime = runTime;
+                if (scrollEnabled) {
+                    font.draw(batch, String.valueOf(decimalFormat.format(runTime)) + " m", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 1.8f);
+//                font.draw(batch, String.valueOf(decimalFormat.format(Enemy.getSpeed())) + " speed", 300, 450);
+                } else {
+                    checkScore(runTime);
+//                font.setScale(2);
+                    font.setColor(Color.BLACK);
+                    font.draw(batch, String.valueOf("Your highest score: " + decimalFormat.format(getHighScore())) + " m", 250, 375);
+                    font.draw(batch, String.valueOf("Your score: " + decimalFormat.format(runTime)) + " m", 250, 300);
+
+                }
+            } else {
+                if (scrollEnabled) {
+                    font.draw(batch, String.valueOf(decimalFormat.format(runTime)) + " m", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 1.8f);
+                } else {
+                    checkScore(runTime);
+//                font.setScale(2);
+                    font.setColor(Color.BLACK);
+                    font.draw(batch, String.valueOf("Your highest score: " + decimalFormat.format(getHighScore())) + " m", 250, 375);
+                    font.draw(batch, String.valueOf("Your current score: " + decimalFormat.format(runTime)) + " m", 250, 300);
+
+                }
             }
-        }
 
 //        Gdx.app.log("SCREENDIMENSIONS", " height " + String.valueOf(Gdx.graphics.getHeight()) + " width " + String.valueOf(Gdx.graphics.getWidth()) );
 
+        }
     }
 
     private boolean leftBoundsReached(float delta) {
@@ -136,9 +144,13 @@ public class Background extends Actor {
         return prefs.getFloat("highScore");
     }
 
-    public static void checkScore(float score){
+    public static void checkScore(float score) {
         if (score > getHighScore()) {
             setHighScore(score);
         }
+    }
+
+    public void setStartIntro(boolean introTut) {
+        intro = introTut;
     }
 }

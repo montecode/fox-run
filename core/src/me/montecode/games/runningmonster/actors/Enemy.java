@@ -42,7 +42,7 @@ public class Enemy extends GameActor{
         super.act(delta);
 //        Gdx.app.log("SPEED", String.valueOf(speed));
         if(speed < Constants.RUNNER_MAX_SPEED + 2) {
-            speed += delta / 50;
+            speed += delta / 45;
         }
         // Ne može ovo ovako da se mijenja, nekad ti na sred skoka promjeni brzinu pa neka ga sad isključeno
 //        else{
