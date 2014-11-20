@@ -17,6 +17,7 @@ public class Enemy extends GameActor{
     private Animation animation;
     private float stateTime;
     static float speed = 0;
+//    private static boolean intro = false;
 
     public Enemy(Body body){
 
@@ -51,7 +52,10 @@ public class Enemy extends GameActor{
         float x = getUserData().getLinearVelocity().x;
         if(x != 0) x -= speed;
         float y = getUserData().getLinearVelocity().y;
-        body.setLinearVelocity(x, y);
+
+//        if(!intro){
+            body.setLinearVelocity(x, y);
+//        }
     }
 
     @Override
@@ -77,4 +81,11 @@ public class Enemy extends GameActor{
     public void setLinearVelocity(Vector2 v){
         getUserData().setLinearVelocity(v);
     }
+
+//    public static void setIntroEnabled(){
+//        intro = true;
+//    }
+//    public void setIntroDisabled(){
+//        intro = false;
+//    }
 }

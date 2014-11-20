@@ -34,7 +34,7 @@ import me.montecode.games.runningmonster.utils.WorldUtils;
 public class GameStage extends Stage implements ContactListener {
     private static final int VIEWPORT_WIDTH = Constants.APP_WIDTH;
     private static final int VIEWPORT_HEIGHT = Constants.APP_HEIGHT;
-    private  RunningMonsterGame game;
+    private RunningMonsterGame game;
 
     private World world;
     private Array<Body> bodies;
@@ -42,7 +42,7 @@ public class GameStage extends Stage implements ContactListener {
     private Runner runner;
     private Background background;
     float runTime;
-
+    Enemy currentEnemy;
 
     private final float TIME_STEP = 1 / 300f;
     private float accumulator = 0f;
@@ -55,12 +55,14 @@ public class GameStage extends Stage implements ContactListener {
 
     private Vector3 touchPoint;
     private boolean scrollEnabled;
-    
+
     private Array<Enemy> enemies;
+    private boolean intro = false;
 
     public GameStage(RunningMonsterGame game) {
         super(new ScalingViewport(Scaling.stretch, VIEWPORT_WIDTH, VIEWPORT_HEIGHT,
                 new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)));
+        intro = true;
         this.game = game;
         setUpWorld();
         renderer = new Box2DDebugRenderer();
@@ -68,12 +70,13 @@ public class GameStage extends Stage implements ContactListener {
         setupCamera();
         setupTouchControlAreas();
         stopStartScrolling();
+
     }
 
     private void stopStartScrolling() {
         scrollEnabled = false;
         background.setScrollDisabled(false);
-        background.setStartIntro(true);
+        background.setStartIntro(intro);
     }
 
     private void resetGame() {
@@ -81,6 +84,9 @@ public class GameStage extends Stage implements ContactListener {
         renderer = new Box2DDebugRenderer();
         setupCamera();
         Enemy.resetSpeed();
+        intro = true;
+        stopStartScrolling();
+        currentEnemy.setLinearVelocity(new Vector2(0, 0));
     }
 
 
@@ -110,7 +116,7 @@ public class GameStage extends Stage implements ContactListener {
 
     private void setupCamera() {
         camera = new OrthographicCamera(VIEWPORT_WIDTH / 10, VIEWPORT_HEIGHT / 10);
-        camera.position.set(camera.viewportWidth , camera.viewportHeight , 0f);
+        camera.position.set(camera.viewportWidth, camera.viewportHeight, 0f);
         camera.update();
     }
 
@@ -130,7 +136,7 @@ public class GameStage extends Stage implements ContactListener {
         world.getBodies(bodies);
 
         for (Body body : bodies) {
-        	update(body);
+            update(body);
         }
 
         accumulator += delta;
@@ -139,28 +145,28 @@ public class GameStage extends Stage implements ContactListener {
             world.step(TIME_STEP, 6, 2);
             accumulator -= TIME_STEP;
         }
-        
+
 
     }
 
     private void update(Body body) {
-    	
-    	if (runner.isHit()) {
+
+        if (runner.isHit()) {
             stopScrolling();
         } else {
             if (!BodyUtils.bodyInBounds(body) && BodyUtils.bodyIsEnemy(body)) {
-            	
-            	EnemyUserData enemyUserData = (EnemyUserData) body.getUserData();
+
+                EnemyUserData enemyUserData = (EnemyUserData) body.getUserData();
                 enemyUserData.setLinearVelocity(new Vector2(0, 0));
-                
+
                 body.setTransform(new Vector2(Constants.ENEMY_X, body.getPosition().y), 0f);
-                
+
                 if (BodyUtils.bodyIsEnemy(body) && !runner.isHit()) {
-                	
-                	setRandomEnemy();
-                	
+
+                    setRandomEnemy();
+
                 }
-       
+
             }
 
         }
@@ -185,20 +191,23 @@ public class GameStage extends Stage implements ContactListener {
         addActor(rl);
         addActor(rs);
         addActor(rw);
-        
+
         enemies = new Array<Enemy>(6);
         enemies.addAll(fs, fw, rb, rl, rs, rw);
     }
-   
-    
-    public void setRandomEnemy(){
-    	
-    	//get random enemy from array and set its linear velocity
-    	
-    	//enemies.random().setDefaultLinearVelocity();
-    	Enemy currentEnemy = enemies.random();
+
+
+    public void setRandomEnemy() {
+
+        //get random enemy from array and set its linear velocity
+
+        //enemies.random().setDefaultLinearVelocity();
+        currentEnemy = enemies.random();
         currentEnemy.setLinearVelocity(new Vector2(Constants.ENEMY_LINEAR_VELOCITY.x - currentEnemy.getSpeed() * 10, 0));
-    	currentEnemy.setDefaultLinearVelocity();
+        currentEnemy.setDefaultLinearVelocity();
+        if (intro) {
+            currentEnemy.setLinearVelocity(new Vector2(0, 0));
+        }
     }
 
     @Override
@@ -220,20 +229,29 @@ public class GameStage extends Stage implements ContactListener {
     @Override
     public boolean touchDown(int x, int y, int pointer, int button) {
         translateScreenToWorldCoordinates(x, y);
+        if (intro) {
+            intro = false;
+            scrollEnabled = true;
+            background.setScrollDisabled(true);
+            background.setStartIntro(intro);
+            currentEnemy.setLinearVelocity(new Vector2(Constants.ENEMY_LINEAR_VELOCITY.x - currentEnemy.getSpeed() * 10, 0));
+            currentEnemy.setDefaultLinearVelocity();
+        } else {
 
-        if (rightSideTouched(touchPoint.x, touchPoint.y)) {
-            runner.jump();
-            if (!scrollEnabled) {
-                resetGame();
-            }
-        } else if (leftSideTouched(touchPoint.x, touchPoint.y)) {
-            runner.dodge();
-            if (!scrollEnabled) {
-                resetGame();
+            if (rightSideTouched(touchPoint.x, touchPoint.y)) {
+                runner.jump();
+                if (!scrollEnabled) {
+                    resetGame();
+                }
+            } else if (leftSideTouched(touchPoint.x, touchPoint.y)) {
+                runner.dodge();
+                if (!scrollEnabled) {
+                    resetGame();
+                }
             }
         }
+            return super.touchDown(x, y, pointer, button);
 
-        return super.touchDown(x, y, pointer, button);
     }
 
     @Override

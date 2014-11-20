@@ -22,6 +22,7 @@ public class Background extends Actor {
     private Rectangle textureRegionBounds2;
     private int speed = 100;
     private BitmapFont font;
+    private BitmapFont font16;
     float runTime;
     float lastRunTime;
     DecimalFormat decimalFormat = new DecimalFormat("###.##");
@@ -44,7 +45,14 @@ public class Background extends Actor {
         fontParameter.size = (int) (20 * Gdx.graphics.getDensity());
         font = generator.generateFont(fontParameter);
         font.setColor(Color.BLACK);
+        FreeTypeFontGenerator.FreeTypeFontParameter fontParameter2 = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameter2.kerning = true;
+        fontParameter2.size = (int) (16 * Gdx.graphics.getDensity());
+        font16 = generator.generateFont(fontParameter2);
+        font16.setColor(Color.BLACK);
         generator.dispose();
+
+
 
         prefs = Gdx.app.getPreferences("RunningMonster");
 
@@ -76,8 +84,8 @@ public class Background extends Actor {
         font.setColor(Color.BLACK);
 //  Display FPS font.draw(batch, "FPS:" + Gdx.graphics.getFramesPerSecond(),600 , 450);// Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight()/2);
         if (intro) {
-            font.draw(batch, "Touch left side of the screen to dodge",160,320);
-            font.draw(batch, "Touch right side of the screen to jump",160,240);
+            font16.draw(batch, "Touch left side of the screen to dodge",160,320);
+            font16.draw(batch, "Touch right side of the screen to jump",160,240);
 
         } else {
 
