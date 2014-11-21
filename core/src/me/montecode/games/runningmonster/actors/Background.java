@@ -3,10 +3,8 @@ package me.montecode.games.runningmonster.actors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -37,21 +35,19 @@ public class Background extends Actor {
         textureRegionBounds1 = new Rectangle(0 - Constants.APP_WIDTH / 2, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
         textureRegionBounds2 = new Rectangle(Constants.APP_WIDTH / 2, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
 
-
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator((Gdx.files.internal("RobotoCondensed-Regular.ttf")));
         FreeTypeFontGenerator.FreeTypeFontParameter fontParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontParameter.kerning = true;
-        fontParameter.size = (int) (20 * Gdx.graphics.getDensity());
+        fontParameter.size = (int) (20 * Gdx.graphics.getDensity()/1.3);
         font = generator.generateFont(fontParameter);
         font.setColor(Color.BLACK);
         FreeTypeFontGenerator.FreeTypeFontParameter fontParameter2 = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontParameter2.kerning = true;
-        fontParameter2.size = (int) (16 * Gdx.graphics.getDensity());
+        fontParameter2.size = (int) (18 * Gdx.graphics.getDensity()/1.3);
         font16 = generator.generateFont(fontParameter2);
+
         font16.setColor(Color.BLACK);
         generator.dispose();
-
-
 
         prefs = Gdx.app.getPreferences("RunningMonster");
 
@@ -91,11 +87,10 @@ public class Background extends Actor {
             if (runTime > lastRunTime + 0.2) {
                 lastRunTime = runTime;
                 if (scrollEnabled) {
-                    font.draw(batch, String.valueOf(decimalFormat.format(runTime)) + " m", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 1.8f);
+                    font.draw(batch, String.valueOf(decimalFormat.format(runTime)) + " m", 630,450);
 //                font.draw(batch, String.valueOf(decimalFormat.format(Enemy.getSpeed())) + " speed", 300, 450);
                 } else {
                     checkScore(runTime);
-//                font.setScale(2);
                     font.setColor(Color.BLACK);
                     font.draw(batch, String.valueOf("Your highest score: " + decimalFormat.format(getHighScore())) + " m", 250, 375);
                     font.draw(batch, String.valueOf("Your score: " + decimalFormat.format(runTime)) + " m", 250, 300);
@@ -103,10 +98,9 @@ public class Background extends Actor {
                 }
             } else {
                 if (scrollEnabled) {
-                    font.draw(batch, String.valueOf(decimalFormat.format(runTime)) + " m", Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 1.8f);
+                    font.draw(batch, String.valueOf(decimalFormat.format(runTime)) + " m", 630,450);
                 } else {
                     checkScore(runTime);
-//                font.setScale(2);
                     font.setColor(Color.BLACK);
                     font.draw(batch, String.valueOf("Your highest score: " + decimalFormat.format(getHighScore())) + " m", 250, 375);
                     font.draw(batch, String.valueOf("Your current score: " + decimalFormat.format(runTime)) + " m", 250, 300);

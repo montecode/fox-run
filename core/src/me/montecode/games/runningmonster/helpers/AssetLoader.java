@@ -1,13 +1,12 @@
 package me.montecode.games.runningmonster.helpers;
 
-import me.montecode.games.runningmonster.utils.Constants;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import me.montecode.games.runningmonster.utils.Constants;
 
 public class AssetLoader {
 
