@@ -10,10 +10,12 @@ public class EnemyUserData extends UserData{
 
     private Vector2 linearVelocity;
     private String[] textureRegions;
+    private String enemyType;
 
-    public EnemyUserData(float width, float height, String[] textureRegions){
+    public EnemyUserData(float width, float height, String[] textureRegions, String enemyType){
         super(width, height);
         userDataType = UserDataType.ENEMY;
+        this.enemyType = enemyType;
         linearVelocity = new Vector2(0, 0);
         this.textureRegions = textureRegions;
     }
@@ -28,5 +30,9 @@ public class EnemyUserData extends UserData{
 
     public String[] getTextureRegions(){
         return textureRegions;
+    }
+    
+    public String getEnemyType(){
+    	return enemyType;
     }
 }

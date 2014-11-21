@@ -25,6 +25,7 @@ import me.montecode.games.runningmonster.actors.Ground;
 import me.montecode.games.runningmonster.actors.Runner;
 import me.montecode.games.runningmonster.box2d.EnemyUserData;
 import me.montecode.games.runningmonster.enums.EnemyType;
+import me.montecode.games.runningmonster.helpers.AssetLoader;
 import me.montecode.games.runningmonster.screens.StartGameScreen;
 import me.montecode.games.runningmonster.utils.BodyUtils;
 import me.montecode.games.runningmonster.utils.Constants;

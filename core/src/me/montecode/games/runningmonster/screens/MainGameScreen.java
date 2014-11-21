@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import me.montecode.games.runningmonster.RunningMonsterGame;
+import me.montecode.games.runningmonster.helpers.AssetLoader;
 import me.montecode.games.runningmonster.stages.GameStage;
 
 public class MainGameScreen implements Screen {
@@ -16,6 +17,7 @@ public class MainGameScreen implements Screen {
     private BitmapFont font;
 
     public MainGameScreen(RunningMonsterGame game){
+    	AssetLoader.load();
         stage = new GameStage(game);
     }
 
@@ -55,6 +57,6 @@ public class MainGameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+    	AssetLoader.dispose();
     }
 }

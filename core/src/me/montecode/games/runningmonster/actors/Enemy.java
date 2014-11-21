@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 import me.montecode.games.runningmonster.box2d.EnemyUserData;
+import me.montecode.games.runningmonster.helpers.AssetLoader;
 import me.montecode.games.runningmonster.utils.Constants;
 
 public class Enemy extends GameActor{
@@ -17,19 +18,20 @@ public class Enemy extends GameActor{
     private Animation animation;
     private float stateTime;
     static float speed = 0;
+    String enemyType;
 //    private static boolean intro = false;
 
     public Enemy(Body body){
 
         super(body);
 
-        TextureAtlas textureAtlas = new TextureAtlas(Constants.CHARACTERS_ATLAS_PATH);
-        TextureRegion[] runningFrames = new TextureRegion[getUserData().getTextureRegions().length];
-        for (int i = 0; i < getUserData().getTextureRegions().length; i++) {
-            String path = getUserData().getTextureRegions()[i];
-            runningFrames[i] = textureAtlas.findRegion(path);
-        }
-        animation = new Animation(0.1f, runningFrames);
+        
+        
+        enemyType = getUserData().getEnemyType();
+        
+        
+        	
+        
         stateTime = 0f;
     }
 
@@ -62,8 +64,32 @@ public class Enemy extends GameActor{
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         stateTime += Gdx.graphics.getDeltaTime();
-        batch.draw(animation.getKeyFrame(stateTime, true), (screenRectangle.x - (screenRectangle.width * 0.1f)),
-                screenRectangle.y, screenRectangle.width * 1.2f, screenRectangle.height * 1.1f);
+        if(enemyType == "RUNNING_SMALL"){
+        	batch.draw(AssetLoader.rockRollAnimation.getKeyFrame(stateTime, true), (screenRectangle.x - (screenRectangle.width * 0.1f)),
+                    screenRectangle.y, screenRectangle.width * 1.2f, screenRectangle.height * 1.1f);
+        }
+        else if(enemyType == "RUNNING_WIDE"){
+        	batch.draw(AssetLoader.woodRollAnimation.getKeyFrame(stateTime, true), (screenRectangle.x - (screenRectangle.width * 0.1f)),
+                    screenRectangle.y, screenRectangle.width * 1.2f, screenRectangle.height * 1.1f);
+        }
+        else if(enemyType == "RUNNING_BIG"){
+        	batch.draw(AssetLoader.wall, (screenRectangle.x - (screenRectangle.width * 0.1f)),
+                    screenRectangle.y, screenRectangle.width * 1.2f, screenRectangle.height * 1.1f);
+        }
+        else if(enemyType == "RUNNING_LONG"){
+        	batch.draw(AssetLoader.wall, (screenRectangle.x - (screenRectangle.width * 0.1f)),
+                    screenRectangle.y, screenRectangle.width * 1.2f, screenRectangle.height * 1.1f);
+        }
+        else if(enemyType == "FLYING_WIDE"){
+        	batch.draw(AssetLoader.rocketFlyAnimation.getKeyFrame(stateTime, true), (screenRectangle.x - (screenRectangle.width * 0.1f)),
+                    screenRectangle.y, screenRectangle.width * 1.2f, screenRectangle.height * 1.1f);
+        }
+        else if(enemyType == "FLYING_SMALL"){
+        	batch.draw(AssetLoader.droidFlyAnimation.getKeyFrame(stateTime, true), (screenRectangle.x - (screenRectangle.width * 0.1f)),
+                    screenRectangle.y, screenRectangle.width * 1.2f, screenRectangle.height * 1.1f);
+        }
+        
+        
     }
 
     public static float getSpeed(){

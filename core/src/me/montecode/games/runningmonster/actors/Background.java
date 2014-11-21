@@ -13,11 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.text.DecimalFormat;
 
+import me.montecode.games.runningmonster.helpers.AssetLoader;
 import me.montecode.games.runningmonster.utils.Constants;
 
 public class Background extends Actor {
 
-    private final TextureRegion textureRegion;
     private Rectangle textureRegionBounds1;
     private Rectangle textureRegionBounds2;
     private int speed = 100;
@@ -34,7 +34,6 @@ public class Background extends Actor {
         runTime = 0;
         lastRunTime = 0;
         scrollEnabled = true;
-        textureRegion = new TextureRegion(new Texture(Gdx.files.internal(Constants.BACKGROUND_IMAGE_PATH)));
         textureRegionBounds1 = new Rectangle(0 - Constants.APP_WIDTH / 2, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
         textureRegionBounds2 = new Rectangle(Constants.APP_WIDTH / 2, 0, Constants.APP_WIDTH, Constants.APP_HEIGHT);
 
@@ -77,9 +76,9 @@ public class Background extends Actor {
     public void draw(Batch batch, float parentAlpha) {
 
         super.draw(batch, parentAlpha);
-        batch.draw(textureRegion, textureRegionBounds1.x, textureRegionBounds1.y, Constants.APP_WIDTH,
+        batch.draw(AssetLoader.bg, textureRegionBounds1.x, textureRegionBounds1.y, Constants.APP_WIDTH,
                 Constants.APP_HEIGHT);
-        batch.draw(textureRegion, textureRegionBounds2.x, textureRegionBounds2.y, Constants.APP_WIDTH,
+        batch.draw(AssetLoader.bg, textureRegionBounds2.x, textureRegionBounds2.y, Constants.APP_WIDTH,
                 Constants.APP_HEIGHT);
         font.setColor(Color.BLACK);
 //  Display FPS font.draw(batch, "FPS:" + Gdx.graphics.getFramesPerSecond(),600 , 450);// Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight()/2);
